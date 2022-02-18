@@ -1,7 +1,7 @@
 # Личный проект «TaskForce»
 
 * Студент: [Леонид Гришин](https://up.htmlacademy.ru/yii/2/user/360863).
-* Наставник: `Неизвестно`.
+* Наставник: [Денис Ходаковский](https://htmlacademy.ru/profile/id1232355).
 
 ---
 
