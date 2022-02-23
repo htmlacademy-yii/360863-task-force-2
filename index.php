@@ -2,12 +2,10 @@
 
 require_once 'Task.php';
 $task = new Task(1);
-print_r($task->customerId);
-print_r($task->workerId);
-echo $task->status;
-print_r($task->getMap());
+$task->userId = 1;
+print_r($task->customerId); echo '<br>';
+echo $task->status; echo '<br>';
+print_r($task->getMap()); echo '<br>';
 $task->status = 'active';
-print_r($task->getActions($task->status));
-print_r($task->getNextStatus('cancel'));
-print_r($task->getMap()[$task->status]);
-print_r($task->getActions($task->status));
+print_r($task->getActions($task->status)); echo '<br>';
+print_r($task->getMap()[$task->status]); echo '<br>';

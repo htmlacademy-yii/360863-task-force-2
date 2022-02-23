@@ -14,6 +14,7 @@ class Task
 
     public $workerId;
     public $customerId;
+    public $userId;
     public $status;
 
     public function __construct ($customerId, $workerId = null )
@@ -54,14 +55,14 @@ class Task
 
     public function getActions ($status)
     {
-        if ($status === self::STATUS_NEW && !empty($this->workerId)) {
-            return self::ACTION_TAKE;
-        } elseif ($status === self::STATUS_NEW && empty($this->workerId)) {
+        if ($status === self::STATUS_NEW && $this->userId === $this->workerId) {
             return self::ACTION_CANCEL;
-        } elseif ($status === self::STATUS_ACTIVE && !empty($this->workerId)) {
-            return self::ACTION_REJECT;
-        } elseif ($status === self::STATUS_ACTIVE && empty($this->workerId)) {
+        } elseif ($status === self::STATUS_NEW && $this->userId === $this->customerId) {
+            return self::ACTION_TAKE;
+        } elseif ($status === self::STATUS_ACTIVE && $this->userId === $this->customerId) {
             return self::ACTION_ACCEPT;
+        } elseif ($status === self::STATUS_ACTIVE && $this->userId === $this->workerId) {
+            return self::ACTION_REJECT;
         }
         return [];
     }
