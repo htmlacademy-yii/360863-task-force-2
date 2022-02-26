@@ -38,7 +38,7 @@ class Task
             ];
     }
 
-    public function getNextStatus (string $action): string
+    public function getNextStatus (string $action): ?string
     {
         $map = [
             self::ACTION_CANCEL => self::STATUS_CANCELLED,
@@ -47,7 +47,7 @@ class Task
             self::ACTION_REJECT => self::STATUS_CANCELLED,
         ];
 
-        return $map[$action];
+        return $map[$action] ?? null;
     }
 
     public function getActions (string $status): array
@@ -56,7 +56,7 @@ class Task
             self::STATUS_NEW => [self::ACTION_CANCEL, self::ACTION_TAKE],
             self::STATUS_ACTIVE => [self::ACTION_ACCEPT, self::ACTION_REJECT]
         ];
-        return $map[$status];
+        return $map[$status] ?? [];
     }
 
 }
