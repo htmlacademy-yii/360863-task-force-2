@@ -14,7 +14,6 @@ class Task
 
     public $workerId;
     public $customerId;
-    public $userId;
     public $status;
 
     public function __construct ($customerId, $workerId = null )
@@ -24,7 +23,7 @@ class Task
         $this->status = self::STATUS_NEW;
     }
 
-    public function getMap()
+    public function getMap(): array
     {
             return [
                 self::STATUS_NEW => 'новый',
@@ -39,32 +38,25 @@ class Task
             ];
     }
 
-    public function getNextStatus ($action)
+    public function getNextStatus (string $action): string
     {
-        if ($action === self::ACTION_CANCEL) {
-            return self::STATUS_CANCELLED;
-        } elseif ($action === self::ACTION_TAKE) {
-            return self::STATUS_ACTIVE;
-        } elseif ($action === self::ACTION_ACCEPT) {
-            return self::STATUS_DONE;
-        } elseif ($action === self::ACTION_REJECT) {
-            return self::STATUS_CANCELLED;
-        }
-        return [];
+        $map = [
+            self::ACTION_CANCEL => self::STATUS_CANCELLED,
+            self::ACTION_TAKE => self::STATUS_ACTIVE,
+            self::ACTION_ACCEPT => self::STATUS_DONE,
+            self::ACTION_REJECT => self::STATUS_CANCELLED,
+        ];
+
+        return $map[$action];
     }
 
-    public function getActions ($status)
+    public function getActions (string $status): array
     {
-        if ($status === self::STATUS_NEW && $this->userId === $this->workerId) {
-            return self::ACTION_CANCEL;
-        } elseif ($status === self::STATUS_NEW && $this->userId === $this->customerId) {
-            return self::ACTION_TAKE;
-        } elseif ($status === self::STATUS_ACTIVE && $this->userId === $this->customerId) {
-            return self::ACTION_ACCEPT;
-        } elseif ($status === self::STATUS_ACTIVE && $this->userId === $this->workerId) {
-            return self::ACTION_REJECT;
-        }
-        return [];
+        $map = [
+            self::STATUS_NEW => [self::ACTION_CANCEL, self::ACTION_TAKE],
+            self::STATUS_ACTIVE => [self::ACTION_ACCEPT, self::ACTION_REJECT]
+        ];
+        return $map[$status];
     }
 
 }
