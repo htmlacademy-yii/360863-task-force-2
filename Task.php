@@ -23,7 +23,7 @@ class Task
         $this->status = self::STATUS_NEW;
     }
 
-    public function getMap(): array
+    public function getStatusMap(): array
     {
             return [
                 self::STATUS_NEW => 'новый',
@@ -31,11 +31,17 @@ class Task
                 self::STATUS_ACTIVE => 'В работе',
                 self::STATUS_DONE => 'Выполнено',
                 self::STATUS_FAILED => 'Провалено',
-                self::ACTION_CANCEL => 'Отменить',
-                self::ACTION_TAKE => 'Откликнуться',
-                self::ACTION_ACCEPT => 'Выполнено',
-                self::ACTION_REJECT => 'Отказаться'
             ];
+    }
+
+    public function getActionMap(): array
+    {
+        return [
+            self::ACTION_CANCEL => 'Отменить',
+            self::ACTION_TAKE => 'Откликнуться',
+            self::ACTION_ACCEPT => 'Выполнено',
+            self::ACTION_REJECT => 'Отказаться',
+        ];
     }
 
     public function getNextStatus (string $action): ?string
