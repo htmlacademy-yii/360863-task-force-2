@@ -1,5 +1,7 @@
 <?php
 
+namespace myorg;
+
 class Task
 {
     const STATUS_NEW = 'new'; //новый заказ
