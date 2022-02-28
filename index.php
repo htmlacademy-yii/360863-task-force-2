@@ -2,7 +2,7 @@
 
 require_once 'vendor/autoload.php';
 
-$task = new myorg\Task(1);
+$task = new TaskForce\Task(1);
 print_r($task->customerId); echo '<br>';
 echo $task->status; echo '<br>';
 print_r($task->getActionMap()); echo '<br>';

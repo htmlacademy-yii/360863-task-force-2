@@ -2,7 +2,7 @@
     "name": "leonid/360863-task-force-2",
     "autoload": {
         "psr-4": {
-            "myorg\\": "classes/"
+            "TaskForce\\": "src/"
         }
     },
     "authors": [
