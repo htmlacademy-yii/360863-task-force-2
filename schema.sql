@@ -7,141 +7,107 @@ USE task_force;
 CREATE TABLE IF NOT EXISTS user (
                                     id INT AUTO_INCREMENT PRIMARY KEY,
                                     registration_date DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
-                                    name VARCHAR(79) NOT NULL,
-                                    email VARCHAR(79) NOT NULL UNIQUE,
-                                    password VARCHAR(79) NOT NULL,
+                                    name VARCHAR(45) NOT NULL,
+                                    email VARCHAR(45) NOT NULL UNIQUE,
+                                    password VARCHAR(255) NOT NULL,
                                     avatar VARCHAR(255),
                                     birth_date DATETIME,
-                                    telephone INT(11),
-                                    telegram VARCHAR(64),
+                                    telephone VARCHAR(20),
+                                    telegram VARCHAR(45),
                                     description VARCHAR(255),
-                                    rating INT(63),
-                                    user_role_id INT,
-                                    city_id INT,
-                                    user_status_id INT
-);
-
-CREATE TABLE IF NOT EXISTS user_role (
-                                         id INT AUTO_INCREMENT PRIMARY KEY,
-                                         title VARCHAR(79) NOT NULL UNIQUE
+                                    city_id INT
 );
 
 CREATE TABLE IF NOT EXISTS city (
                                     id INT AUTO_INCREMENT PRIMARY KEY,
-                                    title VARCHAR(192) NOT NULL UNIQUE
+                                    title VARCHAR(45) NOT NULL UNIQUE
 );
 
-CREATE TABLE IF NOT EXISTS user_status (
-                                           id INT AUTO_INCREMENT PRIMARY KEY,
-                                           title VARCHAR(79) NOT NULL UNIQUE
-);
-
-CREATE TABLE IF NOT EXISTS reviews (
+CREATE TABLE IF NOT EXISTS review (
                                        id INT AUTO_INCREMENT PRIMARY KEY,
                                        description VARCHAR(255) NOT NULL,
                                        creation_date DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
-                                       task_id INT,
-                                       grade_id INT
-);
+                                       grade INT(7) NOT NULL,
+                                       task_id INT NOT NULL
 
-CREATE TABLE IF NOT EXISTS grade (
-                                     id INT AUTO_INCREMENT PRIMARY KEY,
-                                     value INT(8) NOT NULL UNIQUE
 );
 
 CREATE TABLE IF NOT EXISTS task (
                                     id INT AUTO_INCREMENT PRIMARY KEY,
-                                    title VARCHAR(79) NOT NULL,
-                                    description VARCHAR(159) NOT NULL,
+                                    title VARCHAR(255) NOT NULL,
+                                    description VARCHAR(255) NOT NULL,
                                     budget INT,
                                     creation_date DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
                                     expiration_date DATETIME,
-                                    address_description VARCHAR(255),
-                                    task_status_id INT,
-                                    category_id INT,
-                                    customer_id INT,
+                                    status TINYINT(1) NOT NULL,
+                                    latitude FLOAT(15),
+                                    longitude FLOAT(15),
+                                    category_id INT NOT NULL,
+                                    customer_id INT NOT NULL,
                                     worker_id INT,
-                                    task_address_id INT
+                                    city_id INT
+
+
 );
 
-CREATE TABLE IF NOT EXISTS task_address (
-                                            id INT AUTO_INCREMENT PRIMARY KEY,
-                                            latitude FLOAT(15),
-                                            longitude FLOAT(15),
-                                            city_id INT
-);
-
-CREATE TABLE IF NOT EXISTS task_status (
-                                           id INT AUTO_INCREMENT PRIMARY KEY,
-                                           title VARCHAR(79) NOT NULL
-);
-
-CREATE TABLE IF NOT EXISTS task_files (
+CREATE TABLE IF NOT EXISTS task_file (
                                           id INT AUTO_INCREMENT PRIMARY KEY,
                                           file VARCHAR(255) NOT NULL,
-                                          task_id INT
+                                          mime_type INT(1) NOT NULL DEFAULT 1,
+                                          task_id INT NOT NULL
 );
 
 CREATE TABLE IF NOT EXISTS category (
                                         id INT AUTO_INCREMENT PRIMARY KEY,
-                                        title VARCHAR(79) NOT NULL
+                                        title VARCHAR(45) NOT NULL
 );
 
-CREATE TABLE IF NOT EXISTS user_categories (
+CREATE TABLE IF NOT EXISTS user_category (
                                                id INT AUTO_INCREMENT PRIMARY KEY,
-                                               category_id INT,
-                                               worker_id INT
+                                               category_id INT NOT NULL,
+                                               user_id INT NOT NULL
 );
 
-CREATE TABLE IF NOT EXISTS responses (
+CREATE TABLE IF NOT EXISTS response (
                                          id INT AUTO_INCREMENT PRIMARY KEY,
                                          message VARCHAR(255),
-                                         price INT,
+                                         price INT NOT NULL,
                                          creation_date DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
-                                         task_id INT,
-                                         worker_id INT
+                                         task_id INT NOT NULL,
+                                         user_id INT NOT NULL
 );
 
 ALTER TABLE user
     ADD (
-        FOREIGN KEY (user_role_id) REFERENCES user_role(id) ON DELETE CASCADE,
-        FOREIGN KEY (city_id) REFERENCES city(id) ON DELETE CASCADE,
-        FOREIGN KEY (user_status_id) REFERENCES user_status(id) ON DELETE CASCADE
+        FOREIGN KEY (city_id) REFERENCES city(id)
         );
 
-ALTER TABLE reviews
+ALTER TABLE review
     ADD (
-        FOREIGN KEY (task_id) REFERENCES task(id) ON DELETE CASCADE,
-        FOREIGN KEY (grade_id) REFERENCES grade(id) ON DELETE CASCADE
+        FOREIGN KEY (task_id) REFERENCES task(id)
         );
 
 ALTER TABLE task
     ADD (
-        FOREIGN KEY (task_status_id) REFERENCES task_status(id) ON DELETE CASCADE,
-        FOREIGN KEY (category_id) REFERENCES category(id) ON DELETE CASCADE,
-        FOREIGN KEY (customer_id) REFERENCES user(id) ON DELETE CASCADE,
-        FOREIGN KEY (worker_id) REFERENCES user(id) ON DELETE CASCADE,
-        FOREIGN KEY (task_address_id) REFERENCES task_address(id) ON DELETE CASCADE
+        FOREIGN KEY (category_id) REFERENCES category(id),
+        FOREIGN KEY (customer_id) REFERENCES user(id),
+        FOREIGN KEY (worker_id) REFERENCES user(id),
+        FOREIGN KEY (city_id) REFERENCES city(id)
         );
 
-ALTER TABLE task_address
+ALTER TABLE task_file
     ADD (
-        FOREIGN KEY (city_id) REFERENCES city(id) ON DELETE CASCADE
+        FOREIGN KEY (task_id) REFERENCES task(id)
         );
 
-ALTER TABLE task_files
+ALTER TABLE user_category
     ADD (
-        FOREIGN KEY (task_id) REFERENCES task(id) ON DELETE CASCADE
+        FOREIGN KEY (category_id) REFERENCES category(id),
+        FOREIGN KEY (user_id) REFERENCES user(id)
         );
 
-ALTER TABLE user_categories
+ALTER TABLE response
     ADD (
-        FOREIGN KEY (category_id) REFERENCES category(id) ON DELETE CASCADE,
-        FOREIGN KEY (worker_id) REFERENCES user(id) ON DELETE CASCADE
-        );
-
-ALTER TABLE responses
-    ADD (
-        FOREIGN KEY (task_id) REFERENCES task(id) ON DELETE CASCADE,
-        FOREIGN KEY (worker_id) REFERENCES user(id) ON DELETE CASCADE
+        FOREIGN KEY (task_id) REFERENCES task(id),
+        FOREIGN KEY (user_id) REFERENCES user(id)
         );
