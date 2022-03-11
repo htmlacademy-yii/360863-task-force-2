@@ -13,10 +13,6 @@ class TaskStrategy
     const STATUS_ACTIVE = 'active'; //заказ в работе
     const STATUS_DONE = 'done'; //заказ выполнен
     const STATUS_FAILED = 'failed'; //заказ провален
-/*    const ACTION_CANCEL = 'cancel'; //отменить заказ
-    const ACTION_TAKE = 'take'; //взять заказ
-    const ACTION_ACCEPT = 'accept'; //принять заказ
-    const ACTION_REJECT = 'reject'; //отказаться от заказа*/
 
     public $userId;
     public $workerId;
