@@ -18,5 +18,4 @@ class TakeAction extends Action
     {
         return $workerId === $userId;
     }
-
 }

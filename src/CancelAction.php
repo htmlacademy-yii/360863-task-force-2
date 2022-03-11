@@ -18,5 +18,4 @@ class CancelAction extends Action
     {
         return $customerId === $userId;
     }
-
 }
