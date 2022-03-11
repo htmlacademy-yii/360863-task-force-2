@@ -71,5 +71,4 @@ class TaskStrategy
             return call_user_func([$action, 'checkRights'], $this->userId, $this->customerId, $this->workerId);
         }) ?? [];
     }
-
 }

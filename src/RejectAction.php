@@ -17,6 +17,5 @@ class RejectAction extends Action
     public static function checkRights(int $userId, int $customerId, int $workerId):bool
     {
         return $workerId === $userId;
-
     }
 }
