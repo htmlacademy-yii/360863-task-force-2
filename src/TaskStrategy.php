@@ -1,27 +1,29 @@
 <?php
 
 namespace TaskForce;
+use TaskForce\CancelAction;
+use TaskForce\TakeAction;
+use TaskForce\AcceptAction;
+use TaskForce\RejectAction;
 
-class Task
+class TaskStrategy
 {
     const STATUS_NEW = 'new'; //новый заказ
     const STATUS_CANCELLED = 'cancelled'; //заказ отменен
     const STATUS_ACTIVE = 'active'; //заказ в работе
     const STATUS_DONE = 'done'; //заказ выполнен
     const STATUS_FAILED = 'failed'; //заказ провален
-    const ACTION_CANCEL = 'cancel'; //отменить заказ
-    const ACTION_TAKE = 'take'; //взять заказ
-    const ACTION_ACCEPT = 'accept'; //принять заказ
-    const ACTION_REJECT = 'reject'; //отказаться от заказа
 
+    public $userId;
     public $workerId;
     public $customerId;
     public $status;
 
-    public function __construct ($customerId, $workerId = null )
+    public function __construct ($customerId, $userId, $workerId = null  )
     {
         $this->workerId = $workerId;
         $this->customerId = $customerId;
+        $this->userId = $userId;
         $this->status = self::STATUS_NEW;
     }
 
@@ -39,20 +41,20 @@ class Task
     public function getActionMap(): array
     {
         return [
-            self::ACTION_CANCEL => 'Отменить',
-            self::ACTION_TAKE => 'Откликнуться',
-            self::ACTION_ACCEPT => 'Выполнено',
-            self::ACTION_REJECT => 'Отказаться',
+            AcceptAction::getName() => AcceptAction::getCode(),
+            CancelAction::getName() => CancelAction::getCode(),
+            RejectAction::getName() => RejectAction::getCode(),
+            TakeAction::getName() => TakeAction::getCode(),
         ];
     }
 
     public function getNextStatus (string $action): ?string
     {
         $map = [
-            self::ACTION_CANCEL => self::STATUS_CANCELLED,
-            self::ACTION_TAKE => self::STATUS_ACTIVE,
-            self::ACTION_ACCEPT => self::STATUS_DONE,
-            self::ACTION_REJECT => self::STATUS_CANCELLED,
+            CancelAction::getCode() => self::STATUS_CANCELLED,
+            TakeAction::getCode() => self::STATUS_ACTIVE,
+            AcceptAction::getCode() => self::STATUS_DONE,
+            RejectAction::getCode() => self::STATUS_CANCELLED,
         ];
 
         return $map[$action] ?? null;
@@ -61,10 +63,12 @@ class Task
     public function getActions (string $status): array
     {
         $map = [
-            self::STATUS_NEW => [self::ACTION_CANCEL, self::ACTION_TAKE],
-            self::STATUS_ACTIVE => [self::ACTION_ACCEPT, self::ACTION_REJECT]
+            self::STATUS_NEW => [CancelAction::class, TakeAction::class],
+            self::STATUS_ACTIVE => [AcceptAction::class, RejectAction::class]
         ];
-        return $map[$status] ?? [];
-    }
 
+        return array_filter($map[$status], function($action) {
+            return call_user_func([$action, 'checkRights'], $this->userId, $this->customerId, $this->workerId);
+        }) ?? [];
+    }
 }

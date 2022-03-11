@@ -2,10 +2,7 @@
 
 require_once 'vendor/autoload.php';
 
-$task = new TaskForce\Task(1);
-print_r($task->customerId); echo '<br>';
-echo $task->status; echo '<br>';
-print_r($task->getActionMap()); echo '<br>';
-$task->status = 'active';
-print_r($task->getActions($task->status)); echo '<br>';
-print_r($task->getActionMap()[$task->status]); echo '<br>';
+$task = new TaskForce\TaskStrategy(1, 2, 2);
+print_r($task->getActionMap()); print_r('<br>');
+print_r($task->getNextStatus('cancel')); print_r('<br>');
+print_r($task->getActions( 'new')); print_r('<br>');
