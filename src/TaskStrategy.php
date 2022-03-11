@@ -1,10 +1,11 @@
 <?php
 
 namespace TaskForce;
-use TaskForce\CancelAction;
-use TaskForce\TakeAction;
 use TaskForce\AcceptAction;
+use TaskForce\CancelAction;
 use TaskForce\RejectAction;
+use TaskForce\TakeAction;
+use TaskForce\ActionException;
 
 class TaskStrategy
 {
@@ -41,20 +42,24 @@ class TaskStrategy
     public function getActionMap(): array
     {
         return [
-            AcceptAction::getName() => AcceptAction::getCode(),
-            CancelAction::getName() => CancelAction::getCode(),
-            RejectAction::getName() => RejectAction::getCode(),
-            TakeAction::getName() => TakeAction::getCode(),
+            AcceptAction::getCode() => AcceptAction::getName(),
+            CancelAction::getCode() => CancelAction::getName(),
+            RejectAction::getCode() => RejectAction::getName(),
+            TakeAction::getCode() => TakeAction::getName(),
         ];
     }
 
     public function getNextStatus (string $action): ?string
     {
+        if (!array_key_exists($action, $this->getActionMap())){
+            throw new ActionException;
+        }
+
         $map = [
-            CancelAction::getCode() => self::STATUS_CANCELLED,
-            TakeAction::getCode() => self::STATUS_ACTIVE,
             AcceptAction::getCode() => self::STATUS_DONE,
+            CancelAction::getCode() => self::STATUS_CANCELLED,
             RejectAction::getCode() => self::STATUS_CANCELLED,
+            TakeAction::getCode() => self::STATUS_ACTIVE,
         ];
 
         return $map[$action] ?? null;
@@ -62,6 +67,10 @@ class TaskStrategy
 
     public function getActions (string $status): array
     {
+        if (!array_key_exists($status, $this->getStatusMap())){
+            throw new StatusException;
+        }
+
         $map = [
             self::STATUS_NEW => [CancelAction::class, TakeAction::class],
             self::STATUS_ACTIVE => [AcceptAction::class, RejectAction::class]
