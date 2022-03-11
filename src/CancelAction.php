@@ -4,8 +4,7 @@ namespace TaskForce;
 
 class CancelAction extends Action
 {
-
-        public static function getName():string
+    public static function getName():string
     {
         return 'Отменить';
     }
