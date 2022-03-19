@@ -4,12 +4,12 @@ namespace TaskForce;
 
 class ConverterCsvSql
 {
-    public  string $csvFilename;
+    private string $csvFilename;
     const DATABASE_NAME = 'task_force';
-    public  string $tableName;
-    public  object $csvFileObject;
-    public  object $sqlFileObject;
-    public $columns;
+    private string $tableName;
+    private object $csvFileObject;
+    private object $sqlFileObject;
+    private string $columns;
 
     public function __construct(string $filename)
     {
@@ -27,11 +27,11 @@ class ConverterCsvSql
         $this->csvFileObject = new \SplFileObject($this->csvFilename);
         $this->csvFileObject->rewind();
         $this->columns = $this->csvFileObject->current();
-        $this->columns = explode(',' , $this->columns);
-        foreach ($this->columns as $key => $column){
-            $this->columns[$key ] = preg_replace( '/[^[:print:]]/', '',$column);
+        $columns = explode(',' , $this->columns);
+        foreach ($columns as $key => $column){
+            $columns[$key ] = preg_replace( '/[^[:print:]]/', '',$column);
         }
-        $this->columns = implode(',' , $this->columns);
+        $this->columns = implode(',' , $columns);
 
         $this->sqlFileObject = new \SplFileObject($this->sqlFilename, 'w');
         $this->sqlFileObject->fwrite( "use " . self::DATABASE_NAME . ";\n");
