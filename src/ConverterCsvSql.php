@@ -25,9 +25,12 @@ class ConverterCsvSql
         $this->tableName = array_pop($filename);
 
         $this->csvFileObject = new \SplFileObject($this->csvFilename);
-        /*$this->csvFileObject->rewind();
-        $this->columns = $this->csvFileObject->current();*/
-        $this->columns = $this->getHeaderData();
+        $this->csvFileObject->rewind();
+        $this->columns = $this->csvFileObject->current();
+        $this->columns = explode(',' , $this->columns);
+        foreach ($this->columns as $key => $column){
+            $this->columns[$key ] = preg_replace( '/[^[:print:]]/', '',$column);
+        }
         $this->columns = implode(',' , $this->columns);
 
         $this->sqlFileObject = new \SplFileObject($this->sqlFilename, 'w');
@@ -42,13 +45,6 @@ class ConverterCsvSql
         $this->sqlFileObject->next();
         $this->sqlFileObject->fwrite($array);
 
-    }
-
-    private function getHeaderData():?array {
-        $this->csvFileObject->rewind();
-        $data = $this->csvFileObject->fgetcsv();
-
-        return $data;
     }
 
     private function getNextLine():?iterable {
