@@ -9,7 +9,7 @@ class ConverterCsvSql
     public  string $tableName;
     public  object $csvFileObject;
     public  object $sqlFileObject;
-    public string $columns;
+    public $columns;
 
     public function __construct(string $filename)
     {
@@ -25,8 +25,10 @@ class ConverterCsvSql
         $this->tableName = array_pop($filename);
 
         $this->csvFileObject = new \SplFileObject($this->csvFilename);
-        $this->csvFileObject->rewind();
-        $this->columns = $this->csvFileObject->current();
+        /*$this->csvFileObject->rewind();
+        $this->columns = $this->csvFileObject->current();*/
+        $this->columns = $this->getHeaderData();
+        $this->columns = implode(',' , $this->columns);
 
         $this->sqlFileObject = new \SplFileObject($this->sqlFilename, 'w');
         $this->sqlFileObject->fwrite( "use " . self::DATABASE_NAME . ";\n");
@@ -40,6 +42,13 @@ class ConverterCsvSql
         $this->sqlFileObject->next();
         $this->sqlFileObject->fwrite($array);
 
+    }
+
+    private function getHeaderData():?array {
+        $this->csvFileObject->rewind();
+        $data = $this->csvFileObject->fgetcsv();
+
+        return $data;
     }
 
     private function getNextLine():?iterable {

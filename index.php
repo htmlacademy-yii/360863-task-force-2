@@ -29,7 +29,7 @@ $category->import();
 $city = new ConverterCsvSql('data/city.csv');
 $city->import();
 
-
+print_r($category->columns);
 
 /*if(is_numeric(55.89976)){
     print_r(1);
