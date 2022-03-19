@@ -31,7 +31,7 @@ class ConverterCsvSql
 
         $this->sqlFileObject = new \SplFileObject($this->sqlFilename, 'w');
         $this->sqlFileObject->rewind();
-        $this->sqlFileObject->fwrite( 'use' . ' ' . self::DATABASE_NAME . "; \n " );
+        $this->sqlFileObject->fwrite( "use " . self::DATABASE_NAME . "; \n " );
         $this->sqlFileObject->next();
         $this->sqlFileObject->fwrite("insert into $this->tableName ($this->columns) values \n");
 
