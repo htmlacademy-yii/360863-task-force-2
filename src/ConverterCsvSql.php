@@ -31,15 +31,15 @@ class ConverterCsvSql
 
         $this->sqlFileObject = new \SplFileObject($this->sqlFilename, 'w');
         $this->sqlFileObject->rewind();
-        $this->sqlFileObject->fwrite( 'use' . ' ' . self::DATABASE_NAME . ';');
+        $this->sqlFileObject->fwrite( 'use' . ' ' . self::DATABASE_NAME . "; \n " );
         $this->sqlFileObject->next();
-        $this->sqlFileObject->fwrite("insert into $this->tableName ( $this->columns ) values");
+        $this->sqlFileObject->fwrite("insert into $this->tableName ($this->columns) values \n");
 
         $array = [];
         foreach ($this->getNextLine() as $value) {
             $array[] = "($value)";
         }
-        $array = implode(',' , $array);
+        $array = implode(", \n" , $array);
         $this->sqlFileObject->next();
         $this->sqlFileObject->fwrite($array);
 
