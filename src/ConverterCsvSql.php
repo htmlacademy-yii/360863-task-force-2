@@ -40,6 +40,7 @@ class ConverterCsvSql
             $array[] = "($value)";
         }
         $array = implode(',' , $array);
+        $this->sqlFileObject->next();
         $this->sqlFileObject->fwrite($array);
 
     }
