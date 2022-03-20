@@ -4,9 +4,9 @@ use TaskForce\AcceptAction;
 use TaskForce\CancelAction;
 use TaskForce\RejectAction;
 use TaskForce\TakeAction;
-use TaskForce\ActionException;
-use TaskForce\StatusException;
-use TaskForce\ConverterCsvSql;
+use TaskForce\Exception\ActionException;
+use TaskForce\Exception\StatusException;
+use TaskForce\Converter\ConverterCsvSql;
 
 require_once 'vendor/autoload.php';
 
@@ -23,7 +23,7 @@ print_r($task->getActions( 'new')); print_r('<br>');*/
     die($e->getMessage());
 };*/
 
-$category = new \TaskForce\ConverterCsvSql('data/category.csv');
+$category = new \TaskForce\Converter\ConverterCsvSql('data/category.csv');
 $category->import();
 
 $city = new ConverterCsvSql('data/city.csv');

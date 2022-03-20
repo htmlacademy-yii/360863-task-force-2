@@ -1,15 +1,14 @@
 <?php
 
-namespace TaskForce;
+namespace TaskForce\Converter;
+
+use TaskForce\Exception\SourceFileException;
 
 class ConverterCsvSql
 {
-    private string $csvFilename;
     const DATABASE_NAME = 'task_force';
-    private string $tableName;
+    private string $csvFilename;
     private object $csvFileObject;
-    private object $sqlFileObject;
-    private string $columns;
 
     public function __construct(string $filename)
     {
@@ -18,32 +17,36 @@ class ConverterCsvSql
 
     public function import():void
     {
+        if (!file_exists($this->csvFilename)) {
+            throw new SourceFileException;
+        }
+
         $name = explode('.', $this->csvFilename);
         $filename = explode('/', $name[0]);
 
-        $this->sqlFilename = $name[0] . '.sql';
-        $this->tableName = array_pop($filename);
+        $sqlFilename = $name[0] . '.sql';
+        $tableName = array_pop($filename);
 
         $this->csvFileObject = new \SplFileObject($this->csvFilename);
         $this->csvFileObject->rewind();
-        $this->columns = $this->csvFileObject->current();
-        $columns = explode(',' , $this->columns);
+        $columns = $this->csvFileObject->current();
+        $columns = explode(',' , $columns);
         foreach ($columns as $key => $column){
             $columns[$key ] = preg_replace( '/[^[:print:]]/', '',$column);
         }
-        $this->columns = implode(',' , $columns);
+        $columns = implode(',' , $columns);
 
-        $this->sqlFileObject = new \SplFileObject($this->sqlFilename, 'w');
-        $this->sqlFileObject->fwrite( "use " . self::DATABASE_NAME . ";\n");
-        $this->sqlFileObject->fwrite("INSERT INTO $this->tableName ($this->columns) VALUES \n");
+        $sqlFileObject = new \SplFileObject($sqlFilename, 'w');
+        $sqlFileObject->fwrite( "use " . self::DATABASE_NAME . ";\n");
+        $sqlFileObject->fwrite("INSERT INTO $tableName ($columns) VALUES \n");
 
         $array = [];
         foreach ($this->getNextLine() as $value) {
             $array[] = "($value)";
         }
         $array = implode(", \n" , $array);
-        $this->sqlFileObject->next();
-        $this->sqlFileObject->fwrite($array);
+        $sqlFileObject->next();
+        $sqlFileObject->fwrite($array);
 
     }
 

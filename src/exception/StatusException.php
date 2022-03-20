@@ -1,6 +1,6 @@
 <?php
 
-namespace TaskForce;
+namespace TaskForce\Exception;
 
 class StatusException extends \Exception
 {
