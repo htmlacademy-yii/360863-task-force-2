@@ -7,6 +7,7 @@ use TaskForce\Exception\SourceFileException;
 class ConverterCsvSql
 {
     const DATABASE_NAME = 'task_force';
+    const SOURCE = 'data/';
     private string $csvFilename;
     private object $csvFileObject;
 
@@ -21,12 +22,6 @@ class ConverterCsvSql
             throw new SourceFileException;
         }
 
-        $name = explode('.', $this->csvFilename);
-        $filename = explode('/', $name[0]);
-
-        $sqlFilename = $name[0] . '.sql';
-        $tableName = array_pop($filename);
-
         $this->csvFileObject = new \SplFileObject($this->csvFilename);
         $this->csvFileObject->rewind();
         $columns = $this->csvFileObject->current();
@@ -36,6 +31,8 @@ class ConverterCsvSql
         }
         $columns = implode(',' , $columns);
 
+        $tableName = basename($this->csvFilename, '.csv');
+        $sqlFilename = self::SOURCE . $tableName . '.sql';
         $sqlFileObject = new \SplFileObject($sqlFilename, 'w');
         $sqlFileObject->fwrite( "use " . self::DATABASE_NAME . ";\n");
         $sqlFileObject->fwrite("INSERT INTO $tableName ($columns) VALUES \n");
