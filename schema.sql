@@ -20,7 +20,9 @@ CREATE TABLE IF NOT EXISTS user (
 
 CREATE TABLE IF NOT EXISTS city (
                                     id INT AUTO_INCREMENT PRIMARY KEY,
-                                    title VARCHAR(45) NOT NULL UNIQUE
+                                    title VARCHAR(45) NOT NULL UNIQUE,
+                                    latitude FLOAT(15) NOT NULL,
+                                    longitude FLOAT(15) NOT NULL
 );
 
 CREATE TABLE IF NOT EXISTS review (
@@ -59,7 +61,8 @@ CREATE TABLE IF NOT EXISTS task_file (
 
 CREATE TABLE IF NOT EXISTS category (
                                         id INT AUTO_INCREMENT PRIMARY KEY,
-                                        title VARCHAR(45) NOT NULL
+                                        title VARCHAR(45) NOT NULL,
+                                        icon VARCHAR(45) NOT NULL
 );
 
 CREATE TABLE IF NOT EXISTS user_category (

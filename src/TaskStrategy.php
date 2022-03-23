@@ -5,7 +5,8 @@ use TaskForce\AcceptAction;
 use TaskForce\CancelAction;
 use TaskForce\RejectAction;
 use TaskForce\TakeAction;
-use TaskForce\ActionException;
+use TaskForce\Exception\ActionException;
+use TaskForce\Exception\StatusException;
 
 class TaskStrategy
 {
@@ -15,10 +16,10 @@ class TaskStrategy
     const STATUS_DONE = 'done'; //заказ выполнен
     const STATUS_FAILED = 'failed'; //заказ провален
 
-    public $userId;
-    public $workerId;
-    public $customerId;
-    public $status;
+    public int $userId;
+    public int $workerId;
+    public int $customerId;
+    public string $status;
 
     public function __construct ($customerId, $userId, $workerId = null  )
     {
