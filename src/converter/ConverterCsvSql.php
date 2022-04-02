@@ -7,7 +7,7 @@ use TaskForce\Exception\SourceFileException;
 class ConverterCsvSql
 {
     const DATABASE_NAME = 'task_force';
-    private string $fileSource = 'src/data/';
+    public string $fileSource = './data/';
     private string $csvFilename;
     private object $csvFileObject;
 
