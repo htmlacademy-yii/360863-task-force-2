@@ -2,6 +2,7 @@
 
 namespace app\controllers;
 
+use app\models\Category;
 use Yii;
 use yii\filters\AccessControl;
 use yii\web\Controller;
@@ -62,7 +63,7 @@ class SiteController extends Controller
     public function actionIndex()
     {
 
-        $task = new \TaskForce\TaskStrategy(1, 2, 2);
+/*        $task = new \TaskForce\TaskStrategy(1, 2, 2);
         print_r($task->getActionMap()); print_r('<br>');
 
         $category = new \TaskForce\Converter\ConverterCsvSql('./data/category.csv');
@@ -77,7 +78,24 @@ class SiteController extends Controller
             $category->import();
         } catch (\TaskForce\Exception\SourceFileException $e) {
             print_r($e->getMessage());
+        }*/
+
+/*        $category = Category::findOne(['title' => 'Уборка']);
+
+        if ($category){
+            $icon = $category->icon;
+            print_r($icon);
+        };*/
+
+        $category = Category::findOne(['title' => 'Обучение']);
+
+        if (!$category){
+            $category = new Category();
+            $category->title = 'Обучение';
+            $category->icon = 'study';
+            $category->save();
         }
+        print_r($category->title);
 
         return $this->render('index');
     }
