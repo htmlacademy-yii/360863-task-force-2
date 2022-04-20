@@ -10,11 +10,11 @@ use TaskForce\Exception\StatusException;
 
 class TaskStrategy
 {
-    const STATUS_NEW = 'new'; //новый заказ
-    const STATUS_CANCELLED = 'cancelled'; //заказ отменен
-    const STATUS_ACTIVE = 'active'; //заказ в работе
-    const STATUS_DONE = 'done'; //заказ выполнен
-    const STATUS_FAILED = 'failed'; //заказ провален
+    const STATUS_NEW = 1;// 'new'; новый заказ
+    const STATUS_CANCELLED = 2; //'cancelled'; заказ отменен
+    const STATUS_ACTIVE = 3; //'active'; заказ в работе
+    const STATUS_DONE = 4; //'done'; заказ выполнен
+    const STATUS_FAILED = 5; //'failed'; заказ провален
 
     public int $userId;
     public int $workerId;
@@ -32,7 +32,7 @@ class TaskStrategy
     public function getStatusMap(): array
     {
             return [
-                self::STATUS_NEW => 'новый',
+                self::STATUS_NEW => 'Новый',
                 self::STATUS_CANCELLED => 'Отменено',
                 self::STATUS_ACTIVE => 'В работе',
                 self::STATUS_DONE => 'Выполнено',
