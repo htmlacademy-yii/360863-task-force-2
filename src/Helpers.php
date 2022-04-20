@@ -26,7 +26,7 @@ class Helpers
      *
      * @return string Рассчитанная форма множественнго числа
      */
-    static function get_noun_plural_form(int $number, string $one, string $two, string $many): string
+    public static function get_noun_plural_form(int $number, string $one, string $two, string $many): string
     {
         $number = (int)$number;
         $mod10 = $number % 10;
@@ -56,7 +56,7 @@ class Helpers
      *
      * @return string форматированная дата
      */
-    static function getTimePassed(string $dateCreate): string
+    public static function getTimePassed(string $dateCreate): string
     {
         $timeNow = date_create(date("Y-m-d H:i"));
         $dateCreated = date_create($dateCreate);
