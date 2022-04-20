@@ -1,10 +1,7 @@
 <?php
 
-/** @var yii\web\View $this
- * @var array $tasks данные заданий
+/** @var array $tasks данные заданий
  */
-
-$this->title = 'Task-Force';
 
 ?>
 <div class="left-column">
