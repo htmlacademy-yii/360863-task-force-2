@@ -25,7 +25,7 @@ class TasksController extends \yii\web\Controller
             ->join('Left JOIN', 'city', 'task.city_id = city.id')
             ->where (['task.status' => TaskStrategy::STATUS_NEW])
             ->orderBy(['task.creation_date' => SORT_DESC])
-            ->limit(3);
+            ->limit(5);
         $tasks = $query->all();
 
         foreach ($tasks as $key => $task) {

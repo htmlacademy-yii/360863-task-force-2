@@ -64,16 +64,12 @@ class Helpers
         $days = $timePassed->format('%a');
         $hours = $timePassed->format('%h');
         $minutes = $timePassed->format('%i');
-        if ($days == 0 & $hours == 0 & $minutes == 0 ) {
-            return 'меньше минуты назад';
-        } elseif ($days == 0 & $hours == 0 & $minutes > 0) {
-            return $minutes . ' ' . self::get_noun_plural_form($minutes, 'минута', 'минуты', 'минут') . ' ' . 'назад';
-        } elseif ($days == 0 & $hours == 1) {
-            return 'Час назад';
-        } elseif ($days == 0 & $hours > 1) {
+        if ($days == 0 & $hours == 0 & $minutes >= 0) {
+            return $minutes . ' ' . self::get_noun_plural_form($minutes, 'минуту', 'минуты', 'минут') . ' ' . 'назад';
+        } elseif ($days == 0 & $hours >= 1) {
             return $hours . ' ' . self::get_noun_plural_form($hours, 'час', 'часа', 'часов') . ' ' . 'назад';
         } else {
-            return date('d-m-y', strtotime($dateCreate)) . ' ' . 'в' . ' ' . date('H:i', strtotime($dateCreate));
+            return $days . ' ' . self::get_noun_plural_form($days, 'день', 'дня', 'дней') . ' назад';
         }
     }
 }
