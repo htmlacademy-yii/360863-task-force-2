@@ -12,7 +12,7 @@ class TasksController extends \yii\web\Controller
      * @return string
      */
 
-    public function actionIndex()
+    public function actionIndex() :string
     {
         $tasks = TasksQuery::getQuery();
         return $this->render('index', compact('tasks'));
