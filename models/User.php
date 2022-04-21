@@ -48,7 +48,7 @@ class User extends \yii\db\ActiveRecord
             [['password', 'avatar', 'description'], 'string', 'max' => 255],
             [['telephone'], 'string', 'max' => 20],
             [['email'], 'unique'],
-            [['city_id'], 'exist', 'skipOnError' => true, 'targetClass' => City::className(), 'targetAttribute' => ['city_id' => 'id']],
+            [['city_id'], 'exist', 'skipOnError' => true, 'targetClass' => City::class, 'targetAttribute' => ['city_id' => 'id']],
         ];
     }
 
@@ -79,7 +79,7 @@ class User extends \yii\db\ActiveRecord
      */
     public function getCity()
     {
-        return $this->hasOne(City::className(), ['id' => 'city_id']);
+        return $this->hasOne(City::class, ['id' => 'city_id']);
     }
 
     /**
@@ -89,7 +89,7 @@ class User extends \yii\db\ActiveRecord
      */
     public function getResponses()
     {
-        return $this->hasMany(Response::className(), ['user_id' => 'id']);
+        return $this->hasMany(Response::class, ['user_id' => 'id']);
     }
 
     /**
@@ -99,7 +99,7 @@ class User extends \yii\db\ActiveRecord
      */
     public function getTasks()
     {
-        return $this->hasMany(Task::className(), ['customer_id' => 'id']);
+        return $this->hasMany(Task::class, ['customer_id' => 'id']);
     }
 
     /**
@@ -109,7 +109,7 @@ class User extends \yii\db\ActiveRecord
      */
     public function getTasks0()
     {
-        return $this->hasMany(Task::className(), ['worker_id' => 'id']);
+        return $this->hasMany(Task::class, ['worker_id' => 'id']);
     }
 
     /**
@@ -119,6 +119,6 @@ class User extends \yii\db\ActiveRecord
      */
     public function getUserCategories()
     {
-        return $this->hasMany(UserCategory::className(), ['user_id' => 'id']);
+        return $this->hasMany(UserCategory::class, ['user_id' => 'id']);
     }
 }
