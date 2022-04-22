@@ -1,27 +1,36 @@
 <?php
-
+error_reporting(-1);
 /** @var array $tasks данные заданий
  */
+
 
 ?>
 <div class="left-column">
     <h3 class="head-main head-task">Новые задания</h3>
-    <?php foreach ($tasks as $task): ?>
-    <div class="task-card">
-        <div class="header-task">
-            <a  href="#" class="link link--block link--big"><?=$task['taskTitle']; ?></a>
-            <p class="price price--task"><?=$task['budget']; ?> ₽</p>
-        </div>
-        <p class="info-text"><span class="current-time"><?=$task['creation_date']; ?></p>
-        <p class="task-text"><?=$task['description']; ?>
-        </p>
-        <div class="footer-task">
-            <p class="info-text town-text"><?=$task['cityTitle']; ?></p>
-            <p class="info-text category-text"><?=$task['categoryTitle']; ?></p>
-            <a href="#" class="button button--black">Смотреть Задание</a>
-        </div>
-    </div>
-    <?php endforeach ?>
+
+    <?php if(!empty($tasks)): ?>
+
+        <?php foreach ($tasks as $task): ?>
+            <div class="task-card">
+                <div class="header-task">
+                    <a  href="#" class="link link--block link--big"><?=$task['title']; ?></a>
+                    <p class="price price--task"><?=$task['budget']; ?> ₽</p>
+                </div>
+                <p class="info-text"><span class="current-time"><?=$task['creation_date']; ?></p>
+                <p class="task-text"><?=$task['description']; ?>
+                </p>
+                <div class="footer-task">
+                    <p class="info-text town-text"><?=$task['city']['title']; ?></p>
+                    <p class="info-text category-text"><?=$task['category']['title']; ?></p>
+                    <a href="#" class="button button--black">Смотреть Задание</a>
+                </div>
+            </div>
+        <?php endforeach ?>
+
+    <?php else: ?>
+        <p>Новых заданий нет</p>
+    <?php endif; ?>
+
     <div class="pagination-wrapper">
         <ul class="pagination-list">
             <li class="pagination-item mark">
