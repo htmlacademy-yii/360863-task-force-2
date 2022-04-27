@@ -54,7 +54,7 @@ class Category extends \yii\db\ActiveRecord
      */
     public function getTasks()
     {
-        return $this->hasMany(Task::className(), ['category_id' => 'id']);
+        return $this->hasMany(Task::class, ['category_id' => 'id']);
     }
 
     /**
@@ -64,6 +64,6 @@ class Category extends \yii\db\ActiveRecord
      */
     public function getUserCategories()
     {
-        return $this->hasMany(UserCategory::className(), ['category_id' => 'id']);
+        return $this->hasMany(UserCategory::class, ['category_id' => 'id']);
     }
 }
