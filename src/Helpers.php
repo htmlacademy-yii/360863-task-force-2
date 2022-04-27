@@ -33,10 +33,7 @@ class Helpers
         $mod100 = $number % 100;
 
         switch (true) {
-            case ($mod100 >= 11 && $mod100 <= 20):
-                return $many;
-
-            case ($mod10 > 5):
+            case (($mod100 >= 11 && $mod100 <= 20) || $mod10 > 5):
                 return $many;
 
             case ($mod10 === 1):

@@ -1,6 +1,5 @@
 <?php
-error_reporting(-1);
-/** @var array $tasks данные заданий
+/** @var object $tasks данные заданий
  */
 
 
@@ -13,15 +12,15 @@ error_reporting(-1);
         <?php foreach ($tasks as $task): ?>
             <div class="task-card">
                 <div class="header-task">
-                    <a  href="#" class="link link--block link--big"><?=$task['title']; ?></a>
-                    <p class="price price--task"><?=$task['budget']; ?> ₽</p>
+                    <a  href="#" class="link link--block link--big"><?=$task->title; ?></a>
+                    <p class="price price--task"><?=$task->budget; ?> ₽</p>
                 </div>
-                <p class="info-text"><span class="current-time"><?=$task['creation_date']; ?></p>
-                <p class="task-text"><?=$task['description']; ?>
+                <p class="info-text"><span class="current-time"><?=TaskForce\Helpers::getTimePassed($task->creation_date); ?></p>
+                <p class="task-text"><?=$task->description; ?>
                 </p>
                 <div class="footer-task">
-                    <p class="info-text town-text"><?=$task['city']['title']; ?></p>
-                    <p class="info-text category-text"><?=$task['category']['title']; ?></p>
+                    <p class="info-text town-text"><?=$task->city->title; ?></p>
+                    <p class="info-text category-text"><?=$task->category->title; ?></p>
                     <a href="#" class="button button--black">Смотреть Задание</a>
                 </div>
             </div>
