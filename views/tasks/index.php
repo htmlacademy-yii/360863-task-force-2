@@ -1,34 +1,51 @@
 <?php
 /** @var object $tasks данные заданий
+ * @var object $filter модель формы
  */
+function debug($data, $die = false){
+    echo "<pre>" . print_r($data, 1) . "</pre>";
+    if($die){
+        die;
+    }
+}
 
+use yii\widgets\ActiveForm;
+use yii\helpers\Html;
+use \app\models\Category;
 
 ?>
 <div class="left-column">
     <h3 class="head-main head-task">Новые задания</h3>
+<!--    --><?php //debug($taskFilterForm);?>
+<!--    --><?php //debug($categoryList); ?>
 
-    <?php if(!empty($tasks)): ?>
+    <?php \yii\widgets\ListView::widget([
+        'dataProvider' => $dataProvider,
+        'itemView' => '_details'
+    ]); ?>
 
-        <?php foreach ($tasks as $task): ?>
-            <div class="task-card">
-                <div class="header-task">
-                    <a  href="#" class="link link--block link--big"><?=$task->title; ?></a>
-                    <p class="price price--task"><?=$task->budget; ?> ₽</p>
-                </div>
-                <p class="info-text"><span class="current-time"><?=TaskForce\Helpers::getTimePassed($task->creation_date); ?></p>
-                <p class="task-text"><?=$task->description; ?>
-                </p>
-                <div class="footer-task">
-                    <p class="info-text town-text"><?=$task->city->title; ?></p>
-                    <p class="info-text category-text"><?=$task->category->title; ?></p>
-                    <a href="#" class="button button--black">Смотреть Задание</a>
-                </div>
-            </div>
-        <?php endforeach ?>
-
-    <?php else: ?>
-        <p>Новых заданий нет</p>
-    <?php endif; ?>
+<!--    --><?php //if(!empty($tasks)): ?>
+<!---->
+<!--        --><?php //foreach ($tasks as $task): ?>
+<!--            <div class="task-card">-->
+<!--                <div class="header-task">-->
+<!--                    <a  href="#" class="link link--block link--big">--><?//=$task->title; ?><!--</a>-->
+<!--                    <p class="price price--task">--><?//=$task->budget; ?><!-- ₽</p>-->
+<!--                </div>-->
+<!--                <p class="info-text"><span class="current-time">--><?//=TaskForce\Helpers::getTimePassed($task->creation_date); ?><!--</p>-->
+<!--                <p class="task-text">--><?//=$task->description; ?>
+<!--                </p>-->
+<!--                <div class="footer-task">-->
+<!--                    <p class="info-text town-text">--><?//=$task->city->title; ?><!--</p>-->
+<!--                    <p class="info-text category-text">--><?//=$task->category->title; ?><!--</p>-->
+<!--                    <a href="#" class="button button--black">Смотреть Задание</a>-->
+<!--                </div>-->
+<!--            </div>-->
+<!--        --><?php //endforeach; ?>
+<!---->
+<!--    --><?php //else: ?>
+<!--        <p>Новых заданий нет</p>-->
+<!--    --><?php //endif; ?>
 
     <div class="pagination-wrapper">
         <ul class="pagination-list">
@@ -53,34 +70,27 @@
 <div class="right-column">
     <div class="right-card black">
         <div class="search-form">
+            <?php $form = ActiveForm::begin([
+                'method' => 'get'
+            ]); ?>
             <form>
                 <h4 class="head-card">Категории</h4>
                 <div class="form-group">
                     <div>
-                        <input type="checkbox" id="сourier-services" checked>
-                        <label class="control-label" for="сourier-services">Курьерские услуги</label>
-                        <input id="cargo-transportation" type="checkbox">
-                        <label class="control-label" for="cargo-transportation">Грузоперевозки</label>
-                        <input id="translations" type="checkbox">
-                        <label class="control-label" for="translations">Переводы</label>
+                        <?= $form->field($filter, 'category')->checkboxList($categoryList);?>
                     </div>
                 </div>
                 <h4 class="head-card">Дополнительно</h4>
                 <div class="form-group">
-                    <input id="without-performer" type="checkbox" checked>
-                    <label class="control-label" for="without-performer">Без исполнителя</label>
+                    <?= $form->field($filter, 'isWorker')->checkbox([0 => 'Без исполнителя', 'checked'=>1]); ?>
                 </div>
                 <h4 class="head-card">Период</h4>
                 <div class="form-group">
-                    <label for="period-value"></label>
-                    <select id="period-value">
-                        <option>1 час</option>
-                        <option>12 часов</option>
-                        <option>24 часа</option>
-                    </select>
+                <?= $form->field($filter, 'period')->dropdownList($periodList); ?>
                 </div>
-                <input type="button" class="button button--blue" value="Искать">
+                <?= Html::submitButton('Искать', ['class' => 'button button--blue']); ?>
             </form>
+            <?php ActiveForm::end(); ?>
         </div>
     </div>
 </div>
