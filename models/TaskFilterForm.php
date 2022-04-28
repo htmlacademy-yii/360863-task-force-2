@@ -6,6 +6,14 @@ use TaskForce\TaskStrategy;
 use yii\data\ActiveDataProvider;
 use yii\db\Expression;
 
+
+function debug($data, $die = false){
+    echo "<pre>" . print_r($data, 1) . "</pre>";
+    if($die){
+        die;
+    }
+}
+
 class TaskFilterForm extends \yii\base\Model
 {
 
@@ -38,18 +46,14 @@ class TaskFilterForm extends \yii\base\Model
             ->orderBy(['task.creation_date' => SORT_DESC])
             ->indexBy('id');
 
-        $dataProvider = new ActiveDataProvider([
-            'query' => $query,
-            'pagination' => [
-                'pageSize' => 5,
-            ]
-        ], );
-
         if ($this->category){
-            $query->andWhere('IN', 'category_id', $this->category);
+            $array = implode(',', $this->category);
+            debug($this->category);
+            $query->andWhere( "category_id IN ($array)");
         }
 
         if ($this->isWorker){
+            debug($this->category);
             $query->andWhere('worker_id is NULL');
         }
 
@@ -58,6 +62,13 @@ class TaskFilterForm extends \yii\base\Model
                 ':hours' => $this->period,
             ]);
         }
+
+        $dataProvider = new ActiveDataProvider([
+            'query' => $query,
+            'pagination' => [
+                'pageSize' => 1,
+            ]
+        ], );
 
         return $dataProvider;
     }

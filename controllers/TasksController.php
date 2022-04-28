@@ -25,12 +25,12 @@ class TasksController extends \yii\web\Controller
         //$tasks = TasksQuery::getQuery();
 
         $categories = Category::find()->indexBy('id')->all();
-        $tasks = Task::find()
-            ->where (['status' => TaskStrategy::STATUS_NEW])
-            ->with(['category', 'city'])
-            ->orderBy(['task.creation_date' => SORT_DESC])
-            ->indexBy('id')
-            ->all();
+//        $tasks = Task::find()
+//            ->where (['status' => TaskStrategy::STATUS_NEW])
+//            ->with(['category', 'city'])
+//            ->orderBy(['task.creation_date' => SORT_DESC])
+//            ->indexBy('id')
+//            ->all();
 
         $filter = new TaskFilterForm();
 
@@ -56,6 +56,6 @@ class TasksController extends \yii\web\Controller
 
         $dataProvider = $filter->getDataProvider();
 
-        return $this->render('index', compact('tasks', 'filter', 'categoryList', 'categories', 'periodList', 'dataProvider', ));
+        return $this->render('index', compact(/*'tasks',*/ 'filter', 'categoryList', 'categories', 'periodList', 'dataProvider', ));
     }
 }
