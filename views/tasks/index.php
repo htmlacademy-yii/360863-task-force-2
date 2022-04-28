@@ -19,9 +19,9 @@ use \app\models\Category;
 <!--    --><?php //debug($taskFilterForm);?>
 <!--    --><?php //debug($categoryList); ?>
 
-    <?php \yii\widgets\ListView::widget([
+    <?= \yii\widgets\ListView::widget([
         'dataProvider' => $dataProvider,
-        'itemView' => '_details'
+        'itemView' => '_details',
     ]); ?>
 
 <!--    --><?php //if(!empty($tasks)): ?>

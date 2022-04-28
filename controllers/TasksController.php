@@ -56,7 +56,6 @@ class TasksController extends \yii\web\Controller
 
         $dataProvider = $filter->getDataProvider();
 
-
         return $this->render('index', compact('tasks', 'filter', 'categoryList', 'categories', 'periodList', 'dataProvider', ));
     }
 }
