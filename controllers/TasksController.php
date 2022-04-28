@@ -37,8 +37,8 @@ class TasksController extends \yii\web\Controller
         $categoryList = Category::find()->where('id IN (1, 2, 3)')->select('title')->indexBy('id')->column();
         $periodList = [
             1 => '1 час',
-            2 => '12 часов',
-            3 => '24 часа',
+            12 => '12 часов',
+            24 => '24 часа',
         ];
         $filter->category = [1]; //что-то мне кажется так не очень верно
 
