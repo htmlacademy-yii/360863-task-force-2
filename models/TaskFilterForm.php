@@ -2,6 +2,7 @@
 
 namespace app\models;
 
+use TaskForce\TaskStrategy;
 use yii\data\ActiveDataProvider;
 use yii\db\Expression;
 
@@ -31,7 +32,12 @@ class TaskFilterForm extends \yii\base\Model
 
     public function getDataProvider (): ActiveDataProvider
     {
-        $query = Task::find();
+        $query = Task::find()
+            ->where (['status' => TaskStrategy::STATUS_NEW])
+            ->with(['category', 'city'])
+            ->orderBy(['task.creation_date' => SORT_DESC])
+            ->indexBy('id');
+
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
             'pagination' => [
