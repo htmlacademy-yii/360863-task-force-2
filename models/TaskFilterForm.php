@@ -21,6 +21,16 @@ class TaskFilterForm extends \yii\base\Model
     public $isWorker;
     public $period;
 
+    public static function getPeriodList()
+    {
+        return [
+            0 => 'весь период',
+            1 => '1 час',
+            12 => '12 часов',
+            24 => '24 часа',
+        ];
+    }
+
     public function attributeLabels()
     {
         return [
@@ -33,8 +43,9 @@ class TaskFilterForm extends \yii\base\Model
     public function rules()
     {
         return [
-            //['category', 'integer'],
-            ['isWorker', 'integer'],
+            ['category', 'each',  'rule' => ['integer']],
+            ['isWorker', 'number'],
+            [['category', 'isWorker', 'period'], 'safe']
         ];
     }
 
@@ -48,29 +59,27 @@ class TaskFilterForm extends \yii\base\Model
 
         if ($this->category){
             $array = implode(',', $this->category);
-            debug($this->category);
             $query->andWhere( "category_id IN ($array)");
         }
 
-        if ($this->isWorker){
-            debug($this->category);
+        if (!$this->isWorker){
             $query->andWhere('worker_id is NULL');
+        } else {
+            $query->andWhere('worker_id > 0');
         }
 
         if($this->period){
-            $query->andWhere(new Expression('creation_date >= NOW() - INTERVAL :hours HOURS'), [
+            $query->andWhere(new Expression('creation_date >= NOW() - INTERVAL :hours HOUR'), [
                 ':hours' => $this->period,
             ]);
         }
 
-        $dataProvider = new ActiveDataProvider([
+        return new ActiveDataProvider([
             'query' => $query,
             'pagination' => [
-                'pageSize' => 1,
+                'pageSize' => 5,
             ]
         ], );
-
-        return $dataProvider;
     }
 
 }
