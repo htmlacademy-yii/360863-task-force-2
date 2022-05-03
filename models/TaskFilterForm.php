@@ -6,14 +6,6 @@ use TaskForce\TaskStrategy;
 use yii\data\ActiveDataProvider;
 use yii\db\Expression;
 
-
-function debug($data, $die = false){
-    echo "<pre>" . print_r($data, 1) . "</pre>";
-    if($die){
-        die;
-    }
-}
-
 class TaskFilterForm extends \yii\base\Model
 {
 
