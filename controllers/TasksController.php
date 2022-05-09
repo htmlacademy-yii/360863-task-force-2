@@ -2,7 +2,8 @@
 
 namespace app\controllers;
 
-use TaskForce\data\TasksQuery;
+use app\models\TaskFilterForm;
+use Yii;
 
 class TasksController extends \yii\web\Controller
 {
@@ -17,8 +18,9 @@ class TasksController extends \yii\web\Controller
         $this->view->title = 'Tasks - Task-Force';
         $this->view->registerMetaTag(['name' => 'description', 'content' => 'Описание страницы'], 'description');
 
-        $tasks = TasksQuery::getQuery();
+        $filter = new TaskFilterForm();
+        $filter->load(Yii::$app->request->get());
 
-        return $this->render('index', compact('tasks'));
+        return $this->render('index', ['filter' => $filter, 'dataProvider' => $filter->getDataProvider(),]);
     }
 }

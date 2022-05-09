@@ -1,6 +1,7 @@
 use task_force;
 INSERT INTO category (title,icon) VALUES 
-('Курьерские услуги','translation'), 
+('Курьерские услуги', 'delivery'),
+('Переводы', 'translation'),
 ('Уборка','clean'), 
 ('Переезды','cargo'), 
 ('Компьютерная помощь','neo'), 
