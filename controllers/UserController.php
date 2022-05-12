@@ -9,7 +9,7 @@ use app\models\User;
 use app\models\UserCategory;
 use yii\web\NotFoundHttpException;
 
-class UserController extends \yii\web\Controller
+class UserController extends AppController
 {
 
     public function actionView($id): string
@@ -40,7 +40,7 @@ class UserController extends \yii\web\Controller
         if ($reviews) {
             $averageGrade = round(Review::find()->where(['worker_id' => $id])->average('grade'), 2);
         } else {
-            $averageGrade = 'отзывов пока нет';
+            $averageGrade = 0;
         }
 
         $totalDone = count(Task::find()

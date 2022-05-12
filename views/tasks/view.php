@@ -26,8 +26,8 @@
             <div class="feedback-wrapper">
                 <a href="/user/view/<?= $response->user->id;?>" class="link link--block link--big"><?= $response->user->name;?></a>
                 <div class="response-wrapper">
-                    <div class="stars-rating small"><span class="fill-star">&nbsp;</span><span class="fill-star">&nbsp;</span><span class="fill-star">&nbsp;</span><span class="fill-star">&nbsp;</span><span>&nbsp;</span></div>
-                    <p class="reviews"><?= \TaskForce\Helpers::getTotalReviews($response->user->id); ?> отзыва</p>
+                    <div class="stars-rating small"><?= \app\widgets\StarWidget::getStars(\TaskForce\Helpers::getTotalReviews($response->user->id)) ?></div><br>
+                    <p class="reviews"><?= $response->user->total_reviews; ?> отзыва</p>
                 </div>
                 <p class="response-message">
                     <?= $response->message; ?>

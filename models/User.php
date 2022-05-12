@@ -24,9 +24,14 @@ use Yii;
  * @property Task[] $tasks
  * @property Task[] $tasks0
  * @property UserCategory[] $userCategories
+
  */
+
 class User extends \yii\db\ActiveRecord
 {
+
+    public $total_reviews = null;
+
     /**
      * {@inheritdoc}
      */

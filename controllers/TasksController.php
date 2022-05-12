@@ -8,7 +8,7 @@ use app\models\Task;
 use Yii;
 use yii\web\NotFoundHttpException;
 
-class TasksController extends \yii\web\Controller
+class TasksController extends AppController
 {
     /**
      * Displays page Tasks.
@@ -45,6 +45,10 @@ class TasksController extends \yii\web\Controller
             ->with(['user'])
             ->all();
 
-        return $this->render('view', ['task' => $task, 'responses' => $responses]);
+        foreach ($responses as $response){
+            $response->user->total_reviews = \TaskForce\Helpers::getTotalReviews($response->user->id);
+        }
+
+        return $this->render('view', ['task' => $task, 'responses' => $responses,]);
     }
 }

@@ -15,7 +15,7 @@
         <div class="photo-rate">
             <img class="card-photo" src="<?=$user->avatar; ?>" width="191" height="190" alt="Фото пользователя">
             <div class="card-rate">
-                <div class="stars-rating big"><span class="fill-star">&nbsp;</span><span class="fill-star">&nbsp;</span><span class="fill-star">&nbsp;</span><span class="fill-star">&nbsp;</span><span>&nbsp;</span></div>
+                <div class="stars-rating big"><?= \app\widgets\StarWidget::getStars($averageGrade) ?></div>
                 <span class="current-rate"><?=$averageGrade;?></span>
             </div>
         </div>
@@ -51,7 +51,7 @@
                     <p class="task">Задание «<a href="#" class="link link--small"><?=$review->task->title;?></a>» выполнено</p>
                 </div>
                 <div class="feedback-wrapper">
-                    <div class="stars-rating small"><span class="fill-star">&nbsp;</span><span class="fill-star">&nbsp;</span><span class="fill-star">&nbsp;</span><span class="fill-star">&nbsp;</span><span>&nbsp;</span></div>
+                    <div class="stars-rating small"><?= \app\widgets\StarWidget::getStars($review->grade) ?></div>
                     <p class="info-text"><span class="current-time"><?=TaskForce\Helpers::getTimePassed($review->creation_date);?></span></p>
                 </div>
             </div>
