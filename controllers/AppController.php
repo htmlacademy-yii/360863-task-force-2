@@ -17,24 +17,4 @@ class AppController extends \yii\web\Controller
             return 'Открыт для новых заказов';
         }
     }
-
-    public function getRatingPosition($id)
-    {
-        $result = null;
-
-        $sql = "SELECT worker_id FROM review
-GROUP BY worker_id
-HAVING AVG(grade) >= (SELECT AVG(grade) FROM review WHERE worker_id = $id)
-ORDER BY AVG(grade) DESC";
-
-        $records = Yii::$app->db->createCommand($sql)->queryAll(\PDO::FETCH_ASSOC);
-        $index = array_search($id, array_column($records, 'worker_id'));
-
-        if ($index !== false) {
-            $result = $index + 1;
-        }
-
-        return $result;
-    }
-
 }

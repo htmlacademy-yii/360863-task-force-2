@@ -3,12 +3,11 @@
  * @var object $userCategories категорий пользователя
  * @var object $reviews отзывы пользователя
  * @var string $totalDone количество выполненных заданий
- * @var string $averageGrade средний рейтинг
+ * @var string $userAverageGrade средний рейтинг
  * @var string $totalFailed количество проваленных заданий
  * @var string $workerStatus статус Работника
- * @var string $raitingPlace место в рейтинге
+ * @var string $userRaitingPlace место в рейтинге
  */
-
 ?>
 
 <div class="left-column">
@@ -17,8 +16,8 @@
         <div class="photo-rate">
             <img class="card-photo" src="<?=$user->avatar; ?>" width="191" height="190" alt="Фото пользователя">
             <div class="card-rate">
-                <div class="stars-rating big"><?= \app\widgets\StarWidget::getStars($averageGrade) ?></div>
-                <span class="current-rate"><?=$averageGrade;?></span>
+                <div class="stars-rating big"><?= \app\widgets\StarWidget::getStars($userAverageGrade) ?></div>
+                <span class="current-rate"><?=$userAverageGrade;?></span>
             </div>
         </div>
         <p class="user-description">
@@ -68,7 +67,7 @@
             <dt>Всего заказов</dt>
             <dd><?=$totalDone; ?> выполнено, <?=$totalFailed; ?> провалено</dd>
             <dt>Место в рейтинге</dt>
-            <dd><?=$raitingPlace; ?></dd>
+            <dd><?=$userRaitingPlace; ?></dd>
             <dt>Дата регистрации</dt>
             <dd><?=TaskForce\Helpers::formatDate($user->registration_date); ?></dd>
             <dt>Статус</dt>

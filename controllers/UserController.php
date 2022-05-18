@@ -7,6 +7,7 @@ use app\models\Review;
 use app\models\Task;
 use app\models\User;
 use app\models\UserCategory;
+use yii\db\Expression;
 use yii\web\NotFoundHttpException;
 
 class UserController extends AppController
@@ -34,11 +35,15 @@ class UserController extends AppController
             ->all();
 
         if ($reviews) {
-            $averageGrade = round(Review::find()->where(['worker_id' => $id])->average('grade'), 2);
-            $raitingPlace = $this->getRatingPosition($id) . ' место';
+            $averageGrade = Review::find()->where(['worker_id' => $id])->average('grade');
+            $userAverageGrade = round($averageGrade, 2);
+            $avg = new Expression('AVG(grade)');
+            $raitings = Review::find()->select('worker_id')->groupBy('worker_id')->having(['>=', "$avg", "$averageGrade"])->orderBy(["$avg" => SORT_DESC])->asArray()->all();
+            $userRaitingPlace = array_search($id, array_column($raitings, 'worker_id')) + 1 . ' место';
+
         } else {
-            $averageGrade = 0;
-            $raitingPlace = 'отзывов пока нет';
+            $userAverageGrade = 0;
+            $userRaitingPlace = 'отзывов пока нет';
         }
 
         $totalDone = count(Task::find()
@@ -55,11 +60,11 @@ class UserController extends AppController
             'user' => $user,
             'userCategories' => $userCategories,
             'reviews' => $reviews,
-            'averageGrade' => $averageGrade,
+            'userAverageGrade' => $userAverageGrade,
             'totalDone' => $totalDone,
             'totalFailed' => $totalFailed,
             'workerStatus' => $workerStatus,
-            'raitingPlace' => $raitingPlace,
+            'userRaitingPlace' => $userRaitingPlace,
             ]);
     }
 }
