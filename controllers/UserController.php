@@ -11,21 +11,17 @@ use yii\web\NotFoundHttpException;
 
 class UserController extends AppController
 {
-
     public function actionView($id): string
     {
-
         $user = User::find()
             ->where(['id' => $id])
             ->with('city')
             ->one();
-
         if (!$user) {
             throw new NotFoundHttpException('Пользователь не найден');
         }
 
         $this->view->title = "Пользователь: $user->name";
-
 
         $userCategories = UserCategory::find()
             ->where(['user_id' => $id])
@@ -39,8 +35,10 @@ class UserController extends AppController
 
         if ($reviews) {
             $averageGrade = round(Review::find()->where(['worker_id' => $id])->average('grade'), 2);
+            $raitingPlace = $this->getRatingPosition($id) . ' место';
         } else {
             $averageGrade = 0;
+            $raitingPlace = 'отзывов пока нет';
         }
 
         $totalDone = count(Task::find()
@@ -51,6 +49,8 @@ class UserController extends AppController
             ->where(['worker_id' => $id, 'status' => TaskStrategy::STATUS_FAILED])
             ->all());
 
+        $workerStatus = $this->getWorkerStatus ($id);
+
         return $this->render('view', [
             'user' => $user,
             'userCategories' => $userCategories,
@@ -58,7 +58,8 @@ class UserController extends AppController
             'averageGrade' => $averageGrade,
             'totalDone' => $totalDone,
             'totalFailed' => $totalFailed,
+            'workerStatus' => $workerStatus,
+            'raitingPlace' => $raitingPlace,
             ]);
     }
-
 }

@@ -4,10 +4,12 @@
  * @var object $reviews отзывы пользователя
  * @var string $totalDone количество выполненных заданий
  * @var string $averageGrade средний рейтинг
+ * @var string $totalFailed количество проваленных заданий
+ * @var string $workerStatus статус Работника
+ * @var string $raitingPlace место в рейтинге
  */
 
 ?>
-
 
 <div class="left-column">
     <h3 class="head-main"><?=$user->name; ?></h3>
@@ -66,11 +68,11 @@
             <dt>Всего заказов</dt>
             <dd><?=$totalDone; ?> выполнено, <?=$totalFailed; ?> провалено</dd>
             <dt>Место в рейтинге</dt>
-            <dd>25 место</dd>
+            <dd><?=$raitingPlace; ?></dd>
             <dt>Дата регистрации</dt>
             <dd><?=TaskForce\Helpers::formatDate($user->registration_date); ?></dd>
             <dt>Статус</dt>
-            <dd>Открыт для новых заказов</dd>
+            <dd><?= $workerStatus; ?></dd>
         </dl>
     </div>
     <div class="right-card white">
