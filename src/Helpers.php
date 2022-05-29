@@ -132,10 +132,4 @@ class Helpers
 
     }
 
-    public static function getTotalReviews ($id)
-    {
-        return Review::find()
-            ->where(['worker_id' => $id])
-            ->count();
-    }
 }

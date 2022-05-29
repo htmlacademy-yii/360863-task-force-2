@@ -45,10 +45,6 @@ class TasksController extends AppController
             ->with(['user'])
             ->all();
 
-        foreach ($responses as $response){
-            $response->user->total_reviews = \TaskForce\Helpers::getTotalReviews($response->user->id);
-        }
-
         return $this->render('view', ['task' => $task, 'responses' => $responses,]);
     }
 }
