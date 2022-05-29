@@ -30,8 +30,6 @@ use Yii;
 class User extends \yii\db\ActiveRecord
 {
 
-    public $total_reviews = null;
-
     /**
      * {@inheritdoc}
      */
@@ -107,15 +105,6 @@ class User extends \yii\db\ActiveRecord
         return $this->hasMany(Task::class, ['customer_id' => 'id']);
     }
 
-    /**
-     * Gets query for [[Tasks0]].
-     *
-     * @return \yii\db\ActiveQuery
-     */
-    public function getTasks0()
-    {
-        return $this->hasMany(Task::class, ['worker_id' => 'id']);
-    }
 
     /**
      * Gets query for [[UserCategories]].
@@ -125,5 +114,15 @@ class User extends \yii\db\ActiveRecord
     public function getUserCategories()
     {
         return $this->hasMany(UserCategory::class, ['user_id' => 'id']);
+    }
+
+    /**
+     * Gets query for [[Review]].
+     *
+     * @return \yii\db\ActiveQuery
+     */
+    public function getReviews()
+    {
+        return $this->hasMany(Review::class, ['worker_id' => 'id']);
     }
 }

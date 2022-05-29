@@ -29,21 +29,16 @@ class UserController extends AppController
             ->with('category')
             ->all();
 
-        $reviews = Review::find()
-            ->where(['worker_id' => $id])
-            ->with('task', 'worker', 'customer')
-            ->all();
-
-        if ($reviews) {
+        if ($user->reviews) {
             $averageGrade = Review::find()->where(['worker_id' => $id])->average('grade');
             $userAverageGrade = round($averageGrade, 2);
             $avg = new Expression('AVG(grade)');
-            $raitings = Review::find()->select('worker_id')->groupBy('worker_id')->having(['>=', "$avg", "$averageGrade"])->orderBy(["$avg" => SORT_DESC])->asArray()->all();
-            $userRaitingPlace = array_search($id, array_column($raitings, 'worker_id')) + 1 . ' место';
+            $ratings = Review::find()->select('worker_id')->groupBy('worker_id')->having(['>=', "$avg", "$averageGrade"])->orderBy(["$avg" => SORT_DESC])->asArray()->all();
+            $userRatingPlace = array_search($id, array_column($ratings, 'worker_id')) + 1 . ' место';
 
         } else {
             $userAverageGrade = 0;
-            $userRaitingPlace = 'отзывов пока нет';
+            $userRatingPlace = 'отзывов пока нет';
         }
 
         $totalDone = count(Task::find()
@@ -59,12 +54,12 @@ class UserController extends AppController
         return $this->render('view', [
             'user' => $user,
             'userCategories' => $userCategories,
-            'reviews' => $reviews,
+            //'reviews' => $reviews,
             'userAverageGrade' => $userAverageGrade,
             'totalDone' => $totalDone,
             'totalFailed' => $totalFailed,
             'workerStatus' => $workerStatus,
-            'userRaitingPlace' => $userRaitingPlace,
+            'userRatingPlace' => $userRatingPlace,
             ]);
     }
 }

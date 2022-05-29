@@ -6,8 +6,9 @@
  * @var string $userAverageGrade средний рейтинг
  * @var string $totalFailed количество проваленных заданий
  * @var string $workerStatus статус Работника
- * @var string $userRaitingPlace место в рейтинге
+ * @var string $userRatingPlace место в рейтинге
  */
+//var_dump($user->reviews);
 ?>
 
 <div class="left-column">
@@ -43,8 +44,8 @@
     </div>
     <h4 class="head-regular">Отзывы заказчиков</h4>
 
-    <?php if ($reviews): ?>
-        <?php foreach ($reviews as $review): ?>
+    <?php if ($user->reviews): ?>
+        <?php foreach ($user->reviews as $review): ?>
             <div class="response-card">
                 <img class="customer-photo" src="<?=$review->customer->avatar;?>" width="120" height="127" alt="Фото заказчиков">
                 <div class="feedback-wrapper">
@@ -67,7 +68,7 @@
             <dt>Всего заказов</dt>
             <dd><?=$totalDone; ?> выполнено, <?=$totalFailed; ?> провалено</dd>
             <dt>Место в рейтинге</dt>
-            <dd><?=$userRaitingPlace; ?></dd>
+            <dd><?=$userRatingPlace; ?></dd>
             <dt>Дата регистрации</dt>
             <dd><?=TaskForce\Helpers::formatDate($user->registration_date); ?></dd>
             <dt>Статус</dt>
