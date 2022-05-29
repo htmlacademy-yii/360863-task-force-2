@@ -4,6 +4,8 @@
  * @var object $responses отклики
  */
 
+use yii\helpers\Url;
+
 ?>
 <div class="left-column">
     <div class="head-wrapper">
@@ -13,7 +15,7 @@
     <p class="task-description"><?= $task->description; ?></p>
     <a href="#" class="button button--blue">Откликнуться на задание</a>
     <div class="task-map">
-        <img class="map" src="/img/map.png"  width="725" height="346" alt="Новый арбат, 23, к. 1">
+        <img class="map" src="<?= Url::to(['@web/img/map.png']); ?>"  width="725" height="346" alt="Новый арбат, 23, к. 1">
         <p class="map-address town">Москва</p>
         <p class="map-address">Новый арбат, 23, к. 1</p>
     </div>
@@ -22,11 +24,11 @@
 <?php if ($responses): ?>
     <?php foreach ($responses as $response): ?>
         <div class="response-card">
-            <img class="customer-photo" src="<?= $response->user->avatar;?>" width="146" height="156" alt="Фото заказчиков">
+            <img class="customer-photo" src="<?= $response->user->avatar; ?> " width="146" height="156" alt="Фото заказчиков">
             <div class="feedback-wrapper">
-                <a href="/user/view/<?= $response->user->id;?>" class="link link--block link--big"><?= $response->user->name;?></a>
+                <a href="<?= Url::to(['/user/view/', 'id' => $response->user->id]); ?>" class="link link--block link--big"><?= $response->user->name;?></a>
                 <div class="response-wrapper">
-                    <div class="stars-rating small"><?= \app\widgets\StarWidget::getStars(count($response->user->reviews)) ?></div><br>
+                    <div class="stars-rating small"><?= \app\widgets\StarWidget::getStars(count($response->user->reviews)); ?></div><br>
                     <p class="reviews"><?= count($response->user->reviews); ?> отзыва</p>
                 </div>
                 <p class="response-message">

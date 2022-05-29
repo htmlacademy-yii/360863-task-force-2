@@ -1,6 +1,11 @@
+<?php
+
+use yii\helpers\Url;
+
+?>
 <div class="task-card">
     <div class="header-task">
-        <a  href="/tasks/view/<?=$model->id; ?>" class="link link--block link--big"><?=$model->title; ?></a>
+        <a  href="<?= Url::to(['/tasks/view/', 'id' => $model->id]); ?>" class="link link--block link--big"><?=$model->title; ?></a>
         <p class="price price--task"><?=$model->budget; ?> ₽</p>
     </div>
     <p class="info-text"><span class="current-time"><?=TaskForce\Helpers::getTimePassed($model->creation_date); ?></p>

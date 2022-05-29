@@ -8,6 +8,9 @@
  * @var string $workerStatus статус Работника
  * @var string $userRatingPlace место в рейтинге
  */
+
+use yii\helpers\Url;
+
 //var_dump($user->reviews);
 ?>
 
@@ -47,7 +50,7 @@
     <?php if ($user->reviews): ?>
         <?php foreach ($user->reviews as $review): ?>
             <div class="response-card">
-                <img class="customer-photo" src="<?=$review->customer->avatar;?>" width="120" height="127" alt="Фото заказчиков">
+                <img class="customer-photo" src="<?= $review->customer->avatar; ?>" width="120" height="127" alt="Фото заказчиков">
                 <div class="feedback-wrapper">
                     <p class="feedback">«<?=$review->description;?>»</p>
                     <p class="task">Задание «<a href="#" class="link link--small"><?=$review->task->title;?></a>» выполнено</p>
