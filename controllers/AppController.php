@@ -2,10 +2,8 @@
 
 namespace app\controllers;
 
-use app\models\Review;
 use app\models\Task;
 use TaskForce\TaskStrategy;
-use Yii;
 
 class AppController extends \yii\web\Controller
 {
