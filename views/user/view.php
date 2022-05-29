@@ -9,23 +9,22 @@
  * @var string $userRatingPlace место в рейтинге
  */
 
-use yii\helpers\Url;
+use \app\widgets\StarWidget;
 
-//var_dump($user->reviews);
 ?>
 
 <div class="left-column">
-    <h3 class="head-main"><?=$user->name; ?></h3>
+    <h3 class="head-main"><?= $user->name; ?></h3>
     <div class="user-card">
         <div class="photo-rate">
-            <img class="card-photo" src="<?=$user->avatar; ?>" width="191" height="190" alt="Фото пользователя">
+            <img class="card-photo" src="<?= $user->avatar; ?>" width="191" height="190" alt="Фото пользователя">
             <div class="card-rate">
-                <div class="stars-rating big"><?= \app\widgets\StarWidget::getStars($userAverageGrade) ?></div>
-                <span class="current-rate"><?=$userAverageGrade;?></span>
+                <div class="stars-rating big"><?= StarWidget::getStars($userAverageGrade); ?></div>
+                <span class="current-rate"><?= $userAverageGrade; ?></span>
             </div>
         </div>
         <p class="user-description">
-            <?=$user->description; ?>
+            <?= $user->description; ?>
         </p>
     </div>
     <div class="specialization-bio">
@@ -34,7 +33,7 @@ use yii\helpers\Url;
             <ul class="special-list">
                 <?php foreach ($userCategories as $userCategory): ?>
                 <li class="special-item">
-                    <a href="#" class="link link--regular"><?=$userCategory->category->title; ?></a>
+                    <a href="#" class="link link--regular"><?= $userCategory->category->title; ?></a>
                 </li>
                 <?php endforeach; ?>
 
@@ -42,7 +41,7 @@ use yii\helpers\Url;
         </div>
         <div class="bio">
             <p class="head-info">Био</p>
-            <p class="bio-info"><span class="country-info">Россия</span>, город <span class="town-info"><?=$user->city->title; ?></span>, <span class="age-info"><?= TaskForce\Helpers::getAge($user->birth_date);?></span></p>
+            <p class="bio-info"><span class="country-info">Россия</span>, город <span class="town-info"><?= $user->city->title; ?></span>, <span class="age-info"><?= TaskForce\Helpers::getAge($user->birth_date); ?></span></p>
         </div>
     </div>
     <h4 class="head-regular">Отзывы заказчиков</h4>
@@ -52,12 +51,12 @@ use yii\helpers\Url;
             <div class="response-card">
                 <img class="customer-photo" src="<?= $review->customer->avatar; ?>" width="120" height="127" alt="Фото заказчиков">
                 <div class="feedback-wrapper">
-                    <p class="feedback">«<?=$review->description;?>»</p>
-                    <p class="task">Задание «<a href="#" class="link link--small"><?=$review->task->title;?></a>» выполнено</p>
+                    <p class="feedback">«<?= $review->description; ?>»</p>
+                    <p class="task">Задание «<a href="#" class="link link--small"><?= $review->task->title; ?></a>» выполнено</p>
                 </div>
                 <div class="feedback-wrapper">
-                    <div class="stars-rating small"><?= \app\widgets\StarWidget::getStars($review->grade) ?></div>
-                    <p class="info-text"><span class="current-time"><?=TaskForce\Helpers::getTimePassed($review->creation_date);?></span></p>
+                    <div class="stars-rating small"><?= StarWidget::getStars($review->grade); ?></div>
+                    <p class="info-text"><span class="current-time"><?= TaskForce\Helpers::getTimePassed($review->creation_date); ?></span></p>
                 </div>
             </div>
         <?php endforeach; ?>
@@ -69,11 +68,11 @@ use yii\helpers\Url;
         <h4 class="head-card">Статистика исполнителя</h4>
         <dl class="black-list">
             <dt>Всего заказов</dt>
-            <dd><?=$totalDone; ?> выполнено, <?=$totalFailed; ?> провалено</dd>
+            <dd><?= $totalDone; ?> выполнено, <?= $totalFailed; ?> провалено</dd>
             <dt>Место в рейтинге</dt>
-            <dd><?=$userRatingPlace; ?></dd>
+            <dd><?= $userRatingPlace; ?></dd>
             <dt>Дата регистрации</dt>
-            <dd><?=TaskForce\Helpers::formatDate($user->registration_date); ?></dd>
+            <dd><?= TaskForce\Helpers::formatDate($user->registration_date); ?></dd>
             <dt>Статус</dt>
             <dd><?= $workerStatus; ?></dd>
         </dl>
@@ -82,13 +81,13 @@ use yii\helpers\Url;
         <h4 class="head-card">Контакты</h4>
         <ul class="enumeration-list">
             <li class="enumeration-item">
-                <a href="#" class="link link--block link--phone"><?=$user->telephone; ?></a>
+                <a href="#" class="link link--block link--phone"><?= $user->telephone; ?></a>
             </li>
             <li class="enumeration-item">
-                <a href="#" class="link link--block link--email"><?=$user->email; ?></a>
+                <a href="#" class="link link--block link--email"><?= $user->email; ?></a>
             </li>
             <li class="enumeration-item">
-                <a href="#" class="link link--block link--tg"><?=$user->telegram; ?></a>
+                <a href="#" class="link link--block link--tg"><?= $user->telegram; ?></a>
             </li>
         </ul>
     </div>

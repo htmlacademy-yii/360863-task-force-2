@@ -45,7 +45,7 @@ use \yii\widgets\ListView;
                 <h4 class="head-card">Категории</h4>
                 <div class="form-group">
                     <div>
-                        <?= $form->field($filter, 'category')->checkboxList(Category::getCategoriesMap());?>
+                        <?= $form->field($filter, 'category')->checkboxList(Category::getCategoriesMap()); ?>
                     </div>
                 </div>
                 <h4 class="head-card">Дополнительно</h4>
