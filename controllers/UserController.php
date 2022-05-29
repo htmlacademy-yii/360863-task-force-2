@@ -52,7 +52,6 @@ class UserController extends AppController
         return $this->render('view', [
             'user' => $user,
             'userCategories' => $userCategories,
-            //'reviews' => $reviews,
             'userAverageGrade' => $userAverageGrade,
             'totalDone' => $totalDone,
             'totalFailed' => $totalFailed,
