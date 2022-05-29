@@ -8,11 +8,8 @@
  * @var string $workerStatus статус Работника
  * @var string $userRatingPlace место в рейтинге
  */
-
 use \app\widgets\StarWidget;
-
 ?>
-
 <div class="left-column">
     <h3 class="head-main"><?= $user->name; ?></h3>
     <div class="user-card">
@@ -36,7 +33,6 @@ use \app\widgets\StarWidget;
                     <a href="#" class="link link--regular"><?= $userCategory->category->title; ?></a>
                 </li>
                 <?php endforeach; ?>
-
             </ul>
         </div>
         <div class="bio">
@@ -45,7 +41,6 @@ use \app\widgets\StarWidget;
         </div>
     </div>
     <h4 class="head-regular">Отзывы заказчиков</h4>
-
     <?php if ($user->reviews): ?>
         <?php foreach ($user->reviews as $review): ?>
             <div class="response-card">
@@ -61,7 +56,6 @@ use \app\widgets\StarWidget;
             </div>
         <?php endforeach; ?>
     <?php endif; ?>
-
 </div>
 <div class="right-column">
     <div class="right-card black">

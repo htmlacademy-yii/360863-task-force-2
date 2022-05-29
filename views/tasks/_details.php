@@ -1,7 +1,5 @@
 <?php
-
 use yii\helpers\Url;
-
 ?>
 <div class="task-card">
     <div class="header-task">

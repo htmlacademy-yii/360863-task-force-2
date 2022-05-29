@@ -1,13 +1,9 @@
 <?php
-
 /** @var yii\web\View $this */
 /** @var string $content */
-
 use app\assets\AppAsset;
 use yii\bootstrap4\Html;
 use yii\helpers\Url;
-
-
 AppAsset::register($this);
 ?>
 <?php $this->beginPage() ?>
@@ -20,10 +16,8 @@ AppAsset::register($this);
     <title><?= Html::encode($this->title); ?></title>
     <?php $this->head(); ?>
 </head>
-
 <body class="d-flex flex-column h-100">
 <?php $this->beginBody(); ?>
-
 <header class="page-header">
     <nav class="main-nav">
         <a href='<?= Url::to(['/tasks']); ?>' class="header-logo">
@@ -68,13 +62,10 @@ AppAsset::register($this);
         </div>
     </div>
 </header>
-
 <main class="main-content container">
     <?= $content; ?>
 </main>
-
 <?php $this->endBody(); ?>
 </body>
-
 </html>
 <?php $this->endPage(); ?>

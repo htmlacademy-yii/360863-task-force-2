@@ -3,11 +3,9 @@
  * @var object $userCategories категории пользователя
  * @var object $responses отклики
  */
-
 use yii\helpers\Url;
 use \TaskForce\TaskStrategy;
 use \app\widgets\StarWidget;
-
 ?>
 <div class="left-column">
     <div class="head-wrapper">
@@ -22,7 +20,6 @@ use \app\widgets\StarWidget;
         <p class="map-address">Новый арбат, 23, к. 1</p>
     </div>
     <h4 class="head-regular">Отклики на задание</h4>
-
 <?php if ($responses): ?>
     <?php foreach ($responses as $response): ?>
         <div class="response-card">
@@ -36,7 +33,6 @@ use \app\widgets\StarWidget;
                 <p class="response-message">
                     <?= $response->message; ?>
                 </p>
-
             </div>
             <div class="feedback-wrapper">
                 <p class="info-text"><span class="current-time"><?= TaskForce\Helpers::getTimePassed($response->creation_date); ?></p>
@@ -49,7 +45,6 @@ use \app\widgets\StarWidget;
         </div>
     <?php endforeach; ?>
 <?php endif; ?>
-
 </div>
 <div class="right-column">
     <div class="right-card black info-card">
