@@ -22,8 +22,6 @@ class UserController extends AppController
             throw new NotFoundHttpException('Пользователь не найден');
         }
 
-        $this->view->title = "Пользователь: $user->name";
-
         $userCategories = UserCategory::find()
             ->where(['user_id' => $id])
             ->with('category')

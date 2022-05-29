@@ -9,6 +9,8 @@
  * @var string $userRatingPlace место в рейтинге
  */
 use \app\widgets\StarWidget;
+
+$this->title = "Пользователь: $user->name";
 ?>
 <div class="left-column">
     <h3 class="head-main"><?= $user->name; ?></h3>

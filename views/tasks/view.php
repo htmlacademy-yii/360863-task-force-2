@@ -6,6 +6,8 @@
 use yii\helpers\Url;
 use \TaskForce\TaskStrategy;
 use \app\widgets\StarWidget;
+
+$this->title = "Задание: $task->title";
 ?>
 <div class="left-column">
     <div class="head-wrapper">

@@ -20,16 +20,13 @@ class TasksController extends AppController
     {
         $this->view->title = 'Tasks - Task-Force';
         $this->view->registerMetaTag(['name' => 'description', 'content' => 'Описание страницы'], 'description');
-
         $filter = new TaskFilterForm();
         $filter->load(Yii::$app->request->get());
-
         return $this->render('index', ['filter' => $filter, 'dataProvider' => $filter->getDataProvider(),]);
     }
 
-    public function actionView($id = null): string
+    public function actionView($id): string
     {
-
         $task = Task::find()
             ->where(['id' => $id])
             ->with(['category'])
@@ -38,7 +35,6 @@ class TasksController extends AppController
         if (!$task) {
             throw new NotFoundHttpException("Задание с ID $id не найдено");
         }
-        $this->view->title = "Задание: $task->title";
 
         $responses = Response::find()
             ->where(['task_id' => $id])
