@@ -29,5 +29,6 @@ class m220510_224536_add_review_id_column_to_task_table extends Migration
      */
     public function safeDown()
     {
+        $this->dropColumn('task', 'review_id');
     }
 }

@@ -2,6 +2,7 @@
 
 namespace app\models;
 
+use TaskForce\TaskStrategy;
 use Yii;
 
 /**
@@ -124,5 +125,14 @@ class User extends \yii\db\ActiveRecord
     public function getReviews()
     {
         return $this->hasMany(Review::class, ['worker_id' => 'id']);
+    }
+
+    public function getWorkerStatus(): string
+    {
+        if (Task::find()->where(['worker_id' => $this->id, 'status' => TaskStrategy::STATUS_ACTIVE])->all()) {
+            return 'Занят' ;
+        } else {
+            return 'Открыт для новых заказов';
+        }
     }
 }

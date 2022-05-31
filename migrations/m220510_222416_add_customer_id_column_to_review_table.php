@@ -37,5 +37,7 @@ class m220510_222416_add_customer_id_column_to_review_table extends Migration
      */
     public function safeDown()
     {
+        $this->dropColumn('review', 'worker_id');
+        $this->dropColumn('review', 'customer_id');
     }
 }

@@ -33,7 +33,6 @@ class UserController extends AppController
             $avg = new Expression('AVG(grade)');
             $ratings = Review::find()->select('worker_id')->groupBy('worker_id')->having(['>=', "$avg", "$averageGrade"])->orderBy(["$avg" => SORT_DESC])->asArray()->all();
             $userRatingPlace = array_search($id, array_column($ratings, 'worker_id')) + 1 . ' место';
-
         } else {
             $userAverageGrade = 0;
             $userRatingPlace = 'отзывов пока нет';
@@ -47,7 +46,7 @@ class UserController extends AppController
             ->where(['worker_id' => $id, 'status' => TaskStrategy::STATUS_FAILED])
             ->all());
 
-        $workerStatus = $this->getWorkerStatus ($id);
+        $workerStatus = $user->getWorkerStatus();
 
         return $this->render('view', [
             'user' => $user,
