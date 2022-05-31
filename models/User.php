@@ -2,6 +2,7 @@
 
 namespace app\models;
 
+use TaskForce\TaskStrategy;
 use Yii;
 
 /**
@@ -24,9 +25,12 @@ use Yii;
  * @property Task[] $tasks
  * @property Task[] $tasks0
  * @property UserCategory[] $userCategories
+
  */
+
 class User extends \yii\db\ActiveRecord
 {
+
     /**
      * {@inheritdoc}
      */
@@ -102,15 +106,6 @@ class User extends \yii\db\ActiveRecord
         return $this->hasMany(Task::class, ['customer_id' => 'id']);
     }
 
-    /**
-     * Gets query for [[Tasks0]].
-     *
-     * @return \yii\db\ActiveQuery
-     */
-    public function getTasks0()
-    {
-        return $this->hasMany(Task::class, ['worker_id' => 'id']);
-    }
 
     /**
      * Gets query for [[UserCategories]].
@@ -120,5 +115,24 @@ class User extends \yii\db\ActiveRecord
     public function getUserCategories()
     {
         return $this->hasMany(UserCategory::class, ['user_id' => 'id']);
+    }
+
+    /**
+     * Gets query for [[Review]].
+     *
+     * @return \yii\db\ActiveQuery
+     */
+    public function getReviews()
+    {
+        return $this->hasMany(Review::class, ['worker_id' => 'id']);
+    }
+
+    public function getWorkerStatus(): string
+    {
+        if (Task::find()->where(['worker_id' => $this->id, 'status' => TaskStrategy::STATUS_ACTIVE])->all()) {
+            return 'Занят' ;
+        } else {
+            return 'Открыт для новых заказов';
+        }
     }
 }

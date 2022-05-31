@@ -29,7 +29,7 @@ class TaskStrategy
         $this->status = self::STATUS_NEW;
     }
 
-    public function getStatusMap(): array
+    public static function getStatusMap(): array
     {
             return [
                 self::STATUS_NEW => 'Новый',
@@ -38,6 +38,16 @@ class TaskStrategy
                 self::STATUS_DONE => 'Выполнено',
                 self::STATUS_FAILED => 'Провалено',
             ];
+    }
+
+    public function getStatusDescription($status): string
+    {
+        if ($status == self::STATUS_NEW)
+                $message = 'Открыт для новых заказов';
+            else {
+                $message = 'Заказ в работе';
+            }
+        return $message;
     }
 
     public function getActionMap(): array

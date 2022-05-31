@@ -2,18 +2,14 @@
 /** @var object $tasks данные заданий
  * @var object $filter модель формы
  */
-
-
 use yii\widgets\ActiveForm;
 use yii\helpers\Html;
 use \app\models\Category;
 use \app\models\TaskFilterForm;
 use \yii\widgets\ListView;
-
 ?>
 <div class="left-column">
     <h3 class="head-main head-task">Новые задания</h3>
-
     <?= ListView::widget([
         'dataProvider' => $dataProvider,
         'itemView' => '_details',
@@ -31,7 +27,6 @@ use \yii\widgets\ListView;
             'linkOptions' => [
                 'class' => 'link link--page',
             ],
-
         ],
     ]); ?>
 </div>
@@ -45,7 +40,7 @@ use \yii\widgets\ListView;
                 <h4 class="head-card">Категории</h4>
                 <div class="form-group">
                     <div>
-                        <?= $form->field($filter, 'category')->checkboxList(Category::getCategoriesMap());?>
+                        <?= $form->field($filter, 'category')->checkboxList(Category::getCategoriesMap()); ?>
                     </div>
                 </div>
                 <h4 class="head-card">Дополнительно</h4>

@@ -2,6 +2,8 @@
 
 namespace TaskForce;
 
+use app\models\Review;
+
 class Helpers
 {
     /**
@@ -69,4 +71,65 @@ class Helpers
             return $days . ' ' . self::get_noun_plural_form($days, 'день', 'дня', 'дней') . ' назад';
         }
     }
+
+    public static function formatDate(string $date): string
+    {
+        $newDate = date_create($date);
+
+        $month = [
+            0,
+            'января',
+            'февраля',
+            'марта',
+            'апреля',
+            'мая',
+            'июня',
+            'июля',
+            'августа',
+            'сентября',
+            'октября',
+            'ноября',
+            'декабря'
+        ];
+
+        $month = $month[date('n')];
+        $day = date_format($newDate, 'd');
+        $year = date_format($newDate, 'Y');
+        $time = date_format($newDate, 'H:i');
+
+        return "$day $month $year, $time";
+    }
+
+    public static function getAge(string $date): string
+    {
+        $timeNow = date_create(date("Y-m-d H:i"));
+        $dateCreated = date_create($date);
+        $timePassed = date_diff($dateCreated, $timeNow);
+
+        $years = $timePassed->format('%Y');
+
+        // Если число заканчивается на 1
+        if(preg_match("|(1)$|",$years))
+        {
+            $comment='год';
+        }   // Если число заканчивается на 2,3,4
+        elseif(preg_match("/(2|3|4)$/",$years))
+        {
+            $comment='года';
+        }
+        else
+        {
+            $comment='лет';
+        }
+
+        // Если заканчивается на 10-19
+        if(preg_match("/(1)[0-9]$/",$years))
+        {
+            $comment='лет';
+        }
+
+        return "$years $comment" ;
+
+    }
+
 }

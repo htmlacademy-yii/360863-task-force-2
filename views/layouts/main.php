@@ -1,32 +1,27 @@
 <?php
-
 /** @var yii\web\View $this */
 /** @var string $content */
-
 use app\assets\AppAsset;
 use yii\bootstrap4\Html;
-
-
+use yii\helpers\Url;
 AppAsset::register($this);
 ?>
 <?php $this->beginPage() ?>
 <!DOCTYPE html>
-<html lang="<?= Yii::$app->language ?>" class="h-100">
+<html lang="<?= Yii::$app->language; ?>" class="h-100">
 <head>
-    <meta charset="<?= Yii::$app->charset ?>">
+    <meta charset="<?= Yii::$app->charset; ?>">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <?php $this->registerCsrfMetaTags() ?>
-    <title><?= Html::encode($this->title) ?></title>
-    <?php $this->head() ?>
+    <?php $this->registerCsrfMetaTags(); ?>
+    <title><?= Html::encode($this->title); ?></title>
+    <?php $this->head(); ?>
 </head>
-
 <body class="d-flex flex-column h-100">
-<?php $this->beginBody() ?>
-
+<?php $this->beginBody(); ?>
 <header class="page-header">
     <nav class="main-nav">
-        <a href='#' class="header-logo">
-            <img class="logo-image" src="img/logotype.png" width=227 height=60 alt="taskforce">
+        <a href='<?= Url::to(['/tasks']); ?>' class="header-logo">
+            <img class="logo-image" src="<?= Url::to(['@web/img/logotype.png']); ?>" width=227 height=60 alt="taskforce">
         </a>
         <div class="nav-wrapper">
             <ul class="nav-list">
@@ -47,7 +42,7 @@ AppAsset::register($this);
     </nav>
     <div class="user-block">
         <a href="#">
-            <img class="user-photo" src="img/man-glasses.png" width="55" height="55" alt="Аватар">
+            <img class="user-photo" src="<?= Url::to(['@web/img/man-glasses.png']); ?>" width="55" height="55" alt="Аватар">
         </a>
         <div class="user-menu">
             <p class="user-name">Василий</p>
@@ -67,13 +62,10 @@ AppAsset::register($this);
         </div>
     </div>
 </header>
-
 <main class="main-content container">
-    <?= $content ?>
+    <?= $content; ?>
 </main>
-
-<?php $this->endBody() ?>
+<?php $this->endBody(); ?>
 </body>
-
 </html>
-<?php $this->endPage() ?>
+<?php $this->endPage(); ?>
