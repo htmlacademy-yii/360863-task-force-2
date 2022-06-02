@@ -20,9 +20,10 @@ AppAsset::register($this);
 <?php $this->beginBody(); ?>
 <header class="page-header">
     <nav class="main-nav">
-        <a href='<?= Url::to(['/tasks']); ?>' class="header-logo">
+        <a href='<?= Url::to(['/']); ?>' class="header-logo">
             <img class="logo-image" src="<?= Url::to(['@web/img/logotype.png']); ?>" width=227 height=60 alt="taskforce">
         </a>
+        <?php if(Yii::$app->controller->id !== 'registration'): ?>
         <div class="nav-wrapper">
             <ul class="nav-list">
                 <li class="list-item list-item--active">
@@ -39,7 +40,9 @@ AppAsset::register($this);
                 </li>
             </ul>
         </div>
+        <?php endif; ?>
     </nav>
+    <?php if(Yii::$app->controller->id !== 'registration'): ?>
     <div class="user-block">
         <a href="#">
             <img class="user-photo" src="<?= Url::to(['@web/img/man-glasses.png']); ?>" width="55" height="55" alt="Аватар">
@@ -61,10 +64,9 @@ AppAsset::register($this);
             </div>
         </div>
     </div>
+    <?php endif; ?>
 </header>
-<main class="main-content container">
-    <?= $content; ?>
-</main>
+<?= $content; ?>
 <?php $this->endBody(); ?>
 </body>
 </html>
