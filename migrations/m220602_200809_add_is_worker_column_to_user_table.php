@@ -12,9 +12,7 @@ class m220602_200809_add_is_worker_column_to_user_table extends Migration
      */
     public function safeUp()
     {
-
         $this->addColumn('user', 'is_worker', $this->integer(1));
-
     }
 
     /**
@@ -22,8 +20,6 @@ class m220602_200809_add_is_worker_column_to_user_table extends Migration
      */
     public function safeDown()
     {
-
         $this->dropColumn('user', 'is_worker');
-
     }
 }
