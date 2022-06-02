@@ -1,5 +1,5 @@
 <?php
-$this->title = 'Главная страница'; /*а почему не передается title?*/
+$this->title = 'Главная страница';
 ?>
 <main>
     <div class="landing-container">

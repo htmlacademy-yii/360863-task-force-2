@@ -1,5 +1,6 @@
 <?php
 
+use yii\helpers\Html;
 use yii\helpers\Url;
 ?>
 
@@ -7,7 +8,7 @@ use yii\helpers\Url;
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
-    <title>TaskForce</title>
+    <title><?= Html::encode($this->title); ?></title>
     <link rel="stylesheet" href="css/normalize.css">
     <link rel="stylesheet" href="css/landing.css">
 </head>
