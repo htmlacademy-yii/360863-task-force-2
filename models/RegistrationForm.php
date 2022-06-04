@@ -31,7 +31,7 @@ class RegistrationForm extends \yii\base\Model
             'city' => 'Город',
             'password' => 'Пароль',
             'passwordRepeat' => 'Повтор пароля',
-            'isWorker' => 'я собираюсь откликаться на заказы'
+//            'isWorker' => 'я собираюсь откликаться на заказы',
         ];
     }
 }
