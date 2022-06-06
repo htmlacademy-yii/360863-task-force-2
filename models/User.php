@@ -19,6 +19,7 @@ use Yii;
  * @property string|null $telegram
  * @property string|null $description
  * @property int|null $city_id
+ * @property int $is_worker
  *
  * @property City $city
  * @property Response[] $responses
@@ -52,7 +53,8 @@ class User extends \yii\db\ActiveRecord
             [['password', 'avatar', 'description'], 'string', 'max' => 255],
             [['telephone'], 'string', 'max' => 20],
             [['email'], 'unique'],
-            [['city_id'], 'exist', 'skipOnError' => true, 'targetClass' => City::class, 'targetAttribute' => ['city_id' => 'id']],
+            [['city_id'], 'exist', 'targetClass' => City::class, 'targetAttribute' => ['city_id' => 'id']],
+            [['is_worker'], 'integer', 'max' => 1]
         ];
     }
 
@@ -73,6 +75,7 @@ class User extends \yii\db\ActiveRecord
             'telegram' => 'Telegram',
             'description' => 'Description',
             'city_id' => 'City ID',
+            'is_worker' => 'Is Worker',
         ];
     }
 

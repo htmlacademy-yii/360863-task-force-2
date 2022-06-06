@@ -7,6 +7,7 @@ $config = [
     'id' => 'basic',
     'basePath' => dirname(__DIR__),
     'bootstrap' => ['log'],
+    'defaultRoute' => 'landing/index',
     'aliases' => [
         '@bower' => '@vendor/bower-asset',
         '@npm'   => '@vendor/npm-asset',
@@ -55,7 +56,6 @@ $config = [
             'rules' => [
                 'tasks/view/<id:\d+>' => 'tasks/view',
                 'user/view/<id:\d+>' => 'user/view',
-
             ],
         ],
     ],

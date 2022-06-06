@@ -16,6 +16,10 @@ class TaskStrategy
     const STATUS_DONE = 4; //'done'; заказ выполнен
     const STATUS_FAILED = 5; //'failed'; заказ провален
 
+    const USER_WORKER = 1; //исполнитель
+    const USER_CUSTOMER = 0; //исполнитель
+
+
     public int $userId;
     public int $workerId;
     public int $customerId;
