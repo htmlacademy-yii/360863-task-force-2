@@ -17,7 +17,7 @@ class RegistrationController extends AppController
         if ($registration->load(\Yii::$app->request->post()) && $registration->validate()) {
 
             $user = new User();
-            $user->name = $registration->name; /*а нужно тут делать что то с безопасностью?*/
+            $user->name = $registration->name;
             $user->email = $registration->email;
             $user->city_id = $registration->city;
             $user->password = md5($registration->password);

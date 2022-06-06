@@ -18,7 +18,7 @@ $this->title = "Задание: $task->title";
         <p class="task-description"><?= $task->description; ?></p>
         <a href="#" class="button button--blue">Откликнуться на задание</a>
         <div class="task-map">
-            <img class="map" src="<?= Url::to(['@web/img/map.png']); ?>"  width="725" height="346" alt="Новый арбат, 23, к. 1">
+            <img class="map" src="<?= Url::to(['/img/map.png']); ?>"  width="725" height="346" alt="Новый арбат, 23, к. 1">
             <p class="map-address town">Москва</p>
             <p class="map-address">Новый арбат, 23, к. 1</p>
         </div>

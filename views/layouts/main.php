@@ -5,6 +5,7 @@ use app\assets\AppAsset;
 use yii\bootstrap4\Html;
 use yii\helpers\Url;
 AppAsset::register($this);
+
 ?>
 <?php $this->beginPage() ?>
 <!DOCTYPE html>
@@ -20,10 +21,10 @@ AppAsset::register($this);
 <?php $this->beginBody(); ?>
 <header class="page-header">
     <nav class="main-nav">
-        <a href='<?= Url::to(['/']); ?>' class="header-logo">
+        <a href='<?= Url::home(); ?>' class="header-logo">
             <img class="logo-image" src="<?= Url::to(['@web/img/logotype.png']); ?>" width=227 height=60 alt="taskforce">
         </a>
-        <?php if(Yii::$app->controller->id !== 'registration'): ?>
+        <?php if(!Yii::$app->user->isGuest): ?>
         <div class="nav-wrapper">
             <ul class="nav-list">
                 <li class="list-item list-item--active">
