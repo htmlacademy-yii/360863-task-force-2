@@ -2,6 +2,7 @@
 
 namespace app\controllers;
 
+use app\models\AuthorizationForm;
 use app\models\RegistrationForm;
 use app\models\User;;
 use yii\helpers\Url;
@@ -27,7 +28,9 @@ class RegistrationController extends AppController
 
         }
 
-        return $this->render('index', ['registration' => $registration]);
+
+
+        return $this->render('index', ['registration' => $registration, ]);
     }
 
 }

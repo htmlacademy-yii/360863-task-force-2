@@ -138,4 +138,14 @@ class User extends \yii\db\ActiveRecord
             return 'Открыт для новых заказов';
         }
     }
+
+    public static function findByEmail($email)
+    {
+        return static::findOne(['email' => $email]);
+    }
+
+    public function validatePassword ($password)
+    {
+        return $this->password === md5($password);
+    }
 }
