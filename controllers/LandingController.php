@@ -34,7 +34,6 @@ class LandingController extends AppController
 
 
 
-
         return $this->render('index', ['authorization' => $authorization]);
     }
 }
