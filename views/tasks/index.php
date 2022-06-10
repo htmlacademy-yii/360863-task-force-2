@@ -10,6 +10,9 @@ use yii\helpers\Html;
 use \app\models\Category;
 use \app\models\TaskFilterForm;
 use \yii\widgets\ListView;
+
+
+
 ?>
 <main class="main-content container">
     <div class="left-column">

@@ -6,6 +6,7 @@ use yii\bootstrap4\Html;
 use yii\helpers\Url;
 AppAsset::register($this);
 
+
 ?>
 <?php $this->beginPage() ?>
 <!DOCTYPE html>
@@ -59,7 +60,7 @@ AppAsset::register($this);
                         <a href="#" class="link">Связаться с нами</a>
                     </li>
                     <li class="menu-item">
-                        <a href="#" class="link">Выход из системы</a>
+                        <a href="<?= Url::to(['user/logout']); ?>" class="link">Выход из системы</a>
                     </li>
                 </ul>
             </div>

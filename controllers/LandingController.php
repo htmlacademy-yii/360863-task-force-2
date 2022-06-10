@@ -4,6 +4,7 @@ namespace app\controllers;
 
 use app\models\AuthorizationForm;
 use Yii;
+use yii\filters\AccessControl;
 use yii\web\Response;
 use yii\widgets\ActiveForm;
 
@@ -24,9 +25,29 @@ class LandingController extends AppController
         }
 
         if($authorization->validate()){
+            $user = $authorization->getUser();
+            Yii::$app->user->login($user);
             return Yii::$app->response->redirect(['/tasks']);
         }
 
         return $this->render('index', ['authorization' => $authorization]);
+    }
+
+    public function behaviors()
+    {
+        return [
+            'access' => [
+                'class' => AccessControl::class,
+                'rules' => [
+                    [
+                        'allow' => true,
+                        'roles' => ['?']
+                    ]
+                ],
+                'denyCallback' => function ($rule, $action) {
+                    return $action->controller->redirect('tasks');
+                }
+            ]
+        ];
     }
 }

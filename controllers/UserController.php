@@ -10,7 +10,7 @@ use app\models\UserCategory;
 use yii\db\Expression;
 use yii\web\NotFoundHttpException;
 
-class UserController extends AppController
+class UserController extends SecuredController
 {
     public function actionView($id): string
     {
@@ -58,4 +58,12 @@ class UserController extends AppController
             'userRatingPlace' => $userRatingPlace,
             ]);
     }
+
+    public function actionLogout()
+    {
+        \Yii::$app->user->logout();
+
+        return $this->goHome();
+    }
+
 }
