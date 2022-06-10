@@ -20,11 +20,11 @@ class LandingController extends AppController
 
         if (Yii::$app->request->isAjax) {
             Yii::$app->response->format = Response::FORMAT_JSON;
-            if ($authorization->validate()) {
-                return Yii::$app->response->redirect(['/tasks']);
-            } else {
-                return ActiveForm::validate($authorization);
-            }
+            return ActiveForm::validate($authorization);
+        }
+
+        if($authorization->validate()){
+            return Yii::$app->response->redirect(['/tasks']);
         }
 
         return $this->render('index', ['authorization' => $authorization]);

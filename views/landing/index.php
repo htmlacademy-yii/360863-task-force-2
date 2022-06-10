@@ -104,6 +104,7 @@ use \yii\widgets\ActiveForm;
     <?php $form = ActiveForm::begin([
         'id' => 'authorizationForm',
         'method' => 'post',
+        'enableClientValidation' => true,
         'enableAjaxValidation' => true,
         'fieldConfig' => [
             'labelOptions' => ['class' => 'form-modal-description'],
