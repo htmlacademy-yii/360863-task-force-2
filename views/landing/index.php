@@ -109,8 +109,8 @@ use \yii\widgets\ActiveForm;
             'labelOptions' => ['class' => 'form-modal-description'],
         ],
     ]);?>
-    <?= $form->field($authorization, 'email')->textInput(['class' => 'enter-form-email input input-middle', 'enableAjaxValidation' => true,]); ?>
-    <?= $form->field($authorization, 'password')->passwordInput(['class' => 'enter-form-email input input-middle', 'enableAjaxValidation' => true,]); ?>
+    <?= $form->field($authorization, 'email')->textInput(['class' => 'enter-form-email input input-middle']); ?>
+    <?= $form->field($authorization, 'password')->passwordInput(['class' => 'enter-form-email input input-middle']); ?>
     <?= Html::submitButton('Войти', ['class' => 'button']) ;?>
     <?php ActiveForm::end()?>
     <button class="form-modal-close" type="button">Закрыть</button>
