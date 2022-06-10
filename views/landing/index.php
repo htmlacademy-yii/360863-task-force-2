@@ -5,6 +5,7 @@ $this->title = 'Главная страница';
 
 use yii\helpers\Html;
 use \yii\widgets\ActiveForm;
+
 ?>
 <main>
     <div class="landing-container">
@@ -108,9 +109,10 @@ use \yii\widgets\ActiveForm;
             'labelOptions' => ['class' => 'form-modal-description'],
         ],
     ]);?>
-    <?= $form->field($authorization, 'email')->textInput(['class' => 'enter-form-email input input-middle']); ?>
-    <?= $form->field($authorization, 'password')->passwordInput(['class' => 'enter-form-email input input-middle']); ?>
+    <?= $form->field($authorization, 'email')->textInput(['class' => 'enter-form-email input input-middle', 'enableAjaxValidation' => true,]); ?>
+    <?= $form->field($authorization, 'password')->passwordInput(['class' => 'enter-form-email input input-middle', 'enableAjaxValidation' => true,]); ?>
     <?= Html::submitButton('Войти', ['class' => 'button']) ;?>
     <?php ActiveForm::end()?>
     <button class="form-modal-close" type="button">Закрыть</button>
 </section>
+<div class="overlay"></div>

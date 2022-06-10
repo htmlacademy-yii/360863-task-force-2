@@ -2,17 +2,21 @@
 
 use yii\helpers\Html;
 use yii\helpers\Url;
-?>
+use app\assets\AppAsset;
 
+AppAsset::register($this);
+?>
+<?php $this->beginPage() ?>
 <!DOCTYPE html>
-<html lang="ru">
+<html lang="<?= Yii::$app->language; ?>">
 <head>
-    <meta charset="UTF-8">
+    <meta charset="<?= Yii::$app->charset; ?>">
+    <?php $this->registerCsrfMetaTags(); ?>
     <title><?= Html::encode($this->title); ?></title>
-    <link rel="stylesheet" href="css/normalize.css">
-    <link rel="stylesheet" href="css/landing.css">
+    <?php $this->head(); ?>
 </head>
 <body class="landing">
+<?php $this->beginBody(); ?>
 <div class="table-layout">
     <header class=" page-header--index">
         <div class="main-container page-header__container page-header__container--index">
@@ -102,6 +106,7 @@ use yii\helpers\Url;
     </footer>
 </div>
 <div class="overlay"></div>
-<script src="js/landing.js"></script>
+<?php $this->endBody(); ?>
 </body>
 </html>
+<?php $this->endPage(); ?>

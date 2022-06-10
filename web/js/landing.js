@@ -27,22 +27,19 @@ for (var j = 0; j < closeModalLinks.length; j++) {
 
   closeModalLink.addEventListener("click", closeModal)
 }
-
-
-var form = $('#authorizationForm');
-form.on('beforeSubmit', function(){
-  var data = form.serialize();
+var $form = $('#authorizationForm');
+$form.on('beforeSubmit', function() {
+  var data = $form.serialize();
   $.ajax({
-    url: form.attr('action'),
+    url: $form.attr('action'),
     type: 'POST',
     data: data,
-    success: function(res){
-      console.log(res);
-      form[0].reset();
+    success: function (data) {
+      // Implement successful
     },
-    error: function(){
-      alert('Error!');
+    error: function(jqXHR, errMsg) {
+      alert(errMsg);
     }
   });
-  return false;
+  return false; // prevent default submit
 });
