@@ -16,22 +16,16 @@ class LandingController extends AppController
 
         $authorization = new AuthorizationForm();
 
-//        if (Yii::$app->request->getIsPost()) {
-            $authorization->load(Yii::$app->request->post());
+        $authorization->load(Yii::$app->request->post());
 
-            if (Yii::$app->request->isAjax) {
-                Yii::$app->response->format = Response::FORMAT_JSON;
+        if (Yii::$app->request->isAjax) {
+            Yii::$app->response->format = Response::FORMAT_JSON;
+            if ($authorization->validate()) {
+                return Yii::$app->response->redirect(['/tasks']);
+            } else {
                 return ActiveForm::validate($authorization);
             }
-
-            if ($authorization->load(\Yii::$app->request->post()) && $authorization->validate()) {
-                var_dump(11111111111111111111111111);
-            }
-
-//        }
-
-
-
+        }
 
         return $this->render('index', ['authorization' => $authorization]);
     }

@@ -2,9 +2,9 @@
 
 use yii\helpers\Html;
 use yii\helpers\Url;
-use app\assets\AppAsset;
+use app\assets\LandingAsset;
 
-AppAsset::register($this);
+LandingAsset::register($this);
 ?>
 <?php $this->beginPage() ?>
 <!DOCTYPE html>
