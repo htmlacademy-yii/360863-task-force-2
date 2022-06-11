@@ -149,11 +149,6 @@ class User extends \yii\db\ActiveRecord implements IdentityInterface
         return static::findOne(['email' => $email]);
     }
 
-//    public function validatePassword ($password)
-//    {
-//        return $this->password === md5($password);
-//    }
-
     public function validatePassword($password)
     {
         return \Yii::$app->security->validatePassword($password, $this->password);
