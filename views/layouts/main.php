@@ -2,10 +2,15 @@
 /** @var yii\web\View $this */
 /** @var string $content */
 use app\assets\AppAsset;
+use app\models\User;
 use yii\bootstrap4\Html;
 use yii\helpers\Url;
 AppAsset::register($this);
 
+
+if ($id = \Yii::$app->user->getId()) {
+    $user = User::findOne($id);
+}
 
 ?>
 <?php $this->beginPage() ?>
@@ -50,7 +55,7 @@ AppAsset::register($this);
             <img class="user-photo" src="<?= Url::to(['@web/img/man-glasses.png']); ?>" width="55" height="55" alt="Аватар">
         </a>
         <div class="user-menu">
-            <p class="user-name">Василий</p>
+            <p class="user-name"><?= $user ? $user->name : 'Имя пользователя';?></p>
             <div class="popup-head">
                 <ul class="popup-menu">
                     <li class="menu-item">

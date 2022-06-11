@@ -23,6 +23,7 @@ class TasksController extends SecuredController
         $this->view->registerMetaTag(['name' => 'description', 'content' => 'Описание страницы'], 'description');
         $filter = new TaskFilterForm();
         $filter->load(Yii::$app->request->get());
+
         return $this->render('index', ['filter' => $filter, 'dataProvider' => $filter->getDataProvider(),]);
     }
 

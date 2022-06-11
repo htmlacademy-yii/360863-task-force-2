@@ -9,8 +9,6 @@ use yii\filters\AccessControl;
 abstract class SecuredController extends \yii\web\Controller
 {
 
-    public $userProfile;
-
     public function behaviors()
     {
         return [
@@ -28,25 +26,5 @@ abstract class SecuredController extends \yii\web\Controller
             ]
         ];
     }
-
-//    public function getUserProfile ()
-//    {
-//        $userProfile = [];
-//        if ($id = \Yii::$app->user->getId()) {
-//            Yii::$app->user->userProfile = User::findOne($id);
-//        }
-//
-//        return $userProfile;
-//    }
-//
-//
-//    public function __construct($id, $module, $config = [])
-//    {
-//        $this->userProfile = $this->getUserProfile();
-//        parent::__construct($id, $module, $config);
-//    }
-
-
-
 
 }
