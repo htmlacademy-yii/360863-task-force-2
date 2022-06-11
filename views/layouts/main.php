@@ -7,9 +7,6 @@ use yii\bootstrap4\Html;
 use yii\helpers\Url;
 AppAsset::register($this);
 
-$controller = $this->context;
-$userProfile = $controller->userProfile;
-
 ?>
 <?php $this->beginPage() ?>
 <!DOCTYPE html>
@@ -53,7 +50,7 @@ $userProfile = $controller->userProfile;
             <img class="user-photo" src="<?= Url::to(['@web/img/man-glasses.png']); ?>" width="55" height="55" alt="Аватар">
         </a>
         <div class="user-menu">
-            <p class="user-name"><?= $userProfile->name; ?></p>
+            <p class="user-name"><?= $this->context->userProfile->name; ?></p>
             <div class="popup-head">
                 <ul class="popup-menu">
                     <li class="menu-item">
