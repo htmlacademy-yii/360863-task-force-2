@@ -26,12 +26,12 @@ use \app\models\City;
                     <?= $form->field($registration, 'email'); ?>
                 </div>
                 <div class="form-group">
-                    <?= $form->field($registration, 'city')->dropDownList(City::getCitiesMap()); ?>
+                    <?= $form->field($registration, 'city_id')->dropDownList(City::getCitiesMap()); ?>
                 </div>
             </div>
             <?= $form->field($registration, 'password')->passwordInput(); ?>
-            <?= $form->field($registration, 'passwordRepeat')->passwordInput(); ?>
-            <?= $form->field($registration, 'isWorker')->checkbox(['uncheck' => 0, 'value' => 1, 'checked' => true], false)->label('я собираюсь откликаться на заказы', ['class' => 'control-label']); ?>
+            <?= $form->field($registration, 'password_repeat')->passwordInput(); ?>
+            <?= $form->field($registration, 'is_worker')->checkbox(['uncheck' => 0, 'value' => 1, 'checked' => true, ['class' => 'control-label']]) ?>
             <?= Html::submitInput('Создать аккаунт', ['class' => 'button button--blue']) ;?>
             <?php ActiveForm::end(); ?>
         </div>

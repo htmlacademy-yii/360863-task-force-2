@@ -4,6 +4,7 @@ namespace app\models;
 
 use TaskForce\TaskStrategy;
 use Yii;
+use yii\web\IdentityInterface;
 
 /**
  * This is the model class for table "user".
@@ -13,6 +14,7 @@ use Yii;
  * @property string $name
  * @property string $email
  * @property string $password
+ *  * @property string $password_repeat
  * @property string|null $avatar
  * @property string|null $birth_date
  * @property string|null $telephone
@@ -29,8 +31,9 @@ use Yii;
 
  */
 
-class User extends \yii\db\ActiveRecord
+class User extends \yii\db\ActiveRecord implements IdentityInterface
 {
+    public $password_repeat;
 
     /**
      * {@inheritdoc}
@@ -50,11 +53,12 @@ class User extends \yii\db\ActiveRecord
             [['name', 'email', 'password'], 'required'],
             [['city_id'], 'integer'],
             [['name', 'email', 'telegram'], 'string', 'max' => 45],
-            [['password', 'avatar', 'description'], 'string', 'max' => 255],
+            [['password', 'password_repeat', 'avatar', 'description'], 'string', 'max' => 255],
             [['telephone'], 'string', 'max' => 20],
             [['email'], 'unique'],
             [['city_id'], 'exist', 'targetClass' => City::class, 'targetAttribute' => ['city_id' => 'id']],
-            [['is_worker'], 'integer', 'max' => 1]
+            [['is_worker'], 'integer', 'max' => 1],
+            ['password', 'compare'],
         ];
     }
 
@@ -66,16 +70,17 @@ class User extends \yii\db\ActiveRecord
         return [
             'id' => 'ID',
             'registration_date' => 'Registration Date',
-            'name' => 'Name',
+            'name' => 'Ваше имя',
             'email' => 'Email',
-            'password' => 'Password',
+            'password' => 'Пароль',
+            'password_repeat' => 'Повтор пароля',
             'avatar' => 'Avatar',
             'birth_date' => 'Birth Date',
             'telephone' => 'Telephone',
             'telegram' => 'Telegram',
             'description' => 'Description',
-            'city_id' => 'City ID',
-            'is_worker' => 'Is Worker',
+            'city_id' => 'Город',
+            'is_worker' => 'я собираюсь откликаться на заказы'
         ];
     }
 
@@ -137,5 +142,40 @@ class User extends \yii\db\ActiveRecord
         } else {
             return 'Открыт для новых заказов';
         }
+    }
+
+    public static function findByEmail($email)
+    {
+        return static::findOne(['email' => $email]);
+    }
+
+    public function validatePassword($password)
+    {
+        return \Yii::$app->security->validatePassword($password, $this->password);
+    }
+
+    public static function findIdentity($id)
+    {
+        return self::findOne($id);
+    }
+
+    public static function findIdentityByAccessToken($token, $type = null)
+    {
+        // TODO: Implement findIdentityByAccessToken() method.
+    }
+
+    public function getId()
+    {
+        return $this->getPrimaryKey();
+    }
+
+    public function getAuthKey()
+    {
+        // TODO: Implement getAuthKey() method.
+    }
+
+    public function validateAuthKey($authKey)
+    {
+        // TODO: Implement validateAuthKey() method.
     }
 }

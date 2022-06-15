@@ -1,5 +1,11 @@
 <?php
 $this->title = 'Главная страница';
+/** @var object $authorization форма фвторизации
+ */
+
+use yii\helpers\Html;
+use \yii\widgets\ActiveForm;
+
 ?>
 <main>
     <div class="landing-container">
@@ -93,3 +99,21 @@ $this->title = 'Главная страница';
         </div>
     </div>
 </main>
+<section class="modal enter-form form-modal" id="enter-form">
+    <h2>Вход на сайт</h2>
+    <?php $form = ActiveForm::begin([
+        'id' => 'authorizationForm',
+        'method' => 'post',
+        'enableClientValidation' => true,
+        'enableAjaxValidation' => true,
+        'fieldConfig' => [
+            'labelOptions' => ['class' => 'form-modal-description'],
+        ],
+    ]);?>
+    <?= $form->field($authorization, 'email')->textInput(['class' => 'enter-form-email input input-middle']); ?>
+    <?= $form->field($authorization, 'password')->passwordInput(['class' => 'enter-form-email input input-middle']); ?>
+    <?= Html::submitButton('Войти', ['class' => 'button']) ;?>
+    <?php ActiveForm::end()?>
+    <button class="form-modal-close" type="button">Закрыть</button>
+</section>
+<div class="overlay"></div>

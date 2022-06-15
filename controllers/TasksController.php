@@ -6,9 +6,10 @@ use app\models\Response;
 use app\models\TaskFilterForm;
 use app\models\Task;
 use Yii;
+use yii\filters\AccessControl;
 use yii\web\NotFoundHttpException;
 
-class TasksController extends AppController
+class TasksController extends SecuredController
 {
     /**
      * Displays page Tasks.
@@ -22,6 +23,7 @@ class TasksController extends AppController
         $this->view->registerMetaTag(['name' => 'description', 'content' => 'Описание страницы'], 'description');
         $filter = new TaskFilterForm();
         $filter->load(Yii::$app->request->get());
+
         return $this->render('index', ['filter' => $filter, 'dataProvider' => $filter->getDataProvider(),]);
     }
 
@@ -43,4 +45,5 @@ class TasksController extends AppController
 
         return $this->render('view', ['task' => $task, 'responses' => $responses,]);
     }
+
 }

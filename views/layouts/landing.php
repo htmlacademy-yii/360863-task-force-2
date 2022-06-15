@@ -2,17 +2,21 @@
 
 use yii\helpers\Html;
 use yii\helpers\Url;
-?>
+use app\assets\LandingAsset;
 
+LandingAsset::register($this);
+?>
+<?php $this->beginPage() ?>
 <!DOCTYPE html>
-<html lang="ru">
+<html lang="<?= Yii::$app->language; ?>">
 <head>
-    <meta charset="UTF-8">
+    <meta charset="<?= Yii::$app->charset; ?>">
+    <?php $this->registerCsrfMetaTags(); ?>
     <title><?= Html::encode($this->title); ?></title>
-    <link rel="stylesheet" href="css/normalize.css">
-    <link rel="stylesheet" href="css/landing.css">
+    <?php $this->head(); ?>
 </head>
 <body class="landing">
+<?php $this->beginBody(); ?>
 <div class="table-layout">
     <header class=" page-header--index">
         <div class="main-container page-header__container page-header__container--index">
@@ -100,23 +104,9 @@ use yii\helpers\Url;
             </div>
         </div>
     </footer>
-    <section class="modal enter-form form-modal" id="enter-form">
-        <h2>Вход на сайт</h2>
-        <form action="#" method="post">
-            <p>
-                <label class="form-modal-description" for="enter-email">Email</label>
-                <input class="enter-form-email input input-middle" type="email" name="enter-email" id="enter-email">
-            </p>
-            <p>
-                <label class="form-modal-description" for="enter-password">Пароль</label>
-                <input class="enter-form-email input input-middle" type="password" name="enter-email" id="enter-password">
-            </p>
-            <button class="button" type="submit">Войти</button>
-        </form>
-        <button class="form-modal-close" type="button">Закрыть</button>
-    </section>
 </div>
 <div class="overlay"></div>
-<script src="js/landing.js"></script>
+<?php $this->endBody(); ?>
 </body>
 </html>
+<?php $this->endPage(); ?>
