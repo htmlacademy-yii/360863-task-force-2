@@ -1422,10 +1422,12 @@ input[type=date] {
 /*  display: inline-block;*/
 /*  float: right; }*/
 
-.add-task-form input[type=submit] {
-  width: 171px;
-  padding: 15px 26px;
-  margin-top: 29px; }
+/*.add-task-form input[type=submit] {*/
+/*  width: 171px;*/
+/*  padding: 15px 26px;*/
+/*  margin-top: 29px; }*/
+
+
 
 .my-profile-form input[type=submit] {
   width: 193px;

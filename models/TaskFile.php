@@ -9,6 +9,7 @@ use Yii;
  *
  * @property int $id
  * @property string $file
+ * @property array $files
  * @property int $mime_type
  * @property int $task_id
  *
@@ -16,6 +17,8 @@ use Yii;
  */
 class TaskFile extends \yii\db\ActiveRecord
 {
+
+    public $files;
     /**
      * {@inheritdoc}
      */
@@ -33,6 +36,7 @@ class TaskFile extends \yii\db\ActiveRecord
             [['file', 'task_id'], 'required'],
             [['mime_type', 'task_id'], 'integer'],
             [['file'], 'string', 'max' => 255],
+/*            [['files'], 'file', 'maxFiles' => 4],*/
             [['task_id'], 'exist', 'skipOnError' => true, 'targetClass' => Task::class, 'targetAttribute' => ['task_id' => 'id']],
         ];
     }
@@ -45,6 +49,7 @@ class TaskFile extends \yii\db\ActiveRecord
         return [
             'id' => 'ID',
             'file' => 'File',
+            'files' => 'Files',
             'mime_type' => 'Mime Type',
             'task_id' => 'Task ID',
         ];
