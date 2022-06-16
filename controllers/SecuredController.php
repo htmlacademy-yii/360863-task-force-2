@@ -33,6 +33,7 @@ abstract class SecuredController extends \yii\web\Controller
     public function beforeAction($action)
     {
 
+
         if ($id = \Yii::$app->user->getId()) {
             $this->userProfile = User::findOne($id);
         } else {
