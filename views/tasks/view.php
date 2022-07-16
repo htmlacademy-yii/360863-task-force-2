@@ -2,6 +2,7 @@
 /** @var object $task данные заданя
  * @var object $userCategories категории пользователя
  * @var object $responses отклики
+ * @var object $files файлы задания
  */
 use yii\helpers\Url;
 use \TaskForce\TaskStrategy;
@@ -66,14 +67,16 @@ $this->title = "Задание: $task->title";
         <div class="right-card white file-card">
             <h4 class="head-card">Файлы задания</h4>
             <ul class="enumeration-list">
+                <?php if ($files): ?>
+                <?php foreach ($files as $file): ?>
                 <li class="enumeration-item">
-                    <a href="#" class="link link--block link--clip">my_picture.jpg</a>
-                    <p class="file-size">356 Кб</p>
+                    <a href="<?= Url::to(["/uploads/{$file->file}"]); ?>" class="link link--block link--clip"><?= $file->file; ?></a>
+                    <?php if ($file->size): ?>
+                    <p class="file-size"><?= $file->size; ?> Кб</p>
+                    <?php endif; ?>
                 </li>
-                <li class="enumeration-item">
-                    <a href="#" class="link link--block link--clip">information.docx</a>
-                    <p class="file-size">12 Кб</p>
-                </li>
+                    <?php endforeach; ?>
+                <?php endif; ?>
             </ul>
         </div>
     </div>

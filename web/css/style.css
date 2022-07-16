@@ -1427,7 +1427,9 @@ input[type=date] {
 /*  padding: 15px 26px;*/
 /*  margin-top: 29px; }*/
 
-
+.add-task-form input::-webkit-file-upload-button {
+  display: none;
+}
 
 .my-profile-form input[type=submit] {
   width: 193px;

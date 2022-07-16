@@ -59,6 +59,7 @@ class Task extends \yii\db\ActiveRecord
             [['worker_id'], 'exist', 'skipOnError' => true, 'targetClass' => User::class, 'targetAttribute' => ['worker_id' => 'id']],
             [['city_id'], 'exist', 'skipOnError' => true, 'targetClass' => City::class, 'targetAttribute' => ['city_id' => 'id']],
             ['status', 'default', 'value' => 1],
+            ['location', 'validateLocation'],       /*тут я получается сделал что если нет такой локации то ошибка, это правильно?*/
         ];
     }
 
@@ -153,6 +154,15 @@ class Task extends \yii\db\ActiveRecord
     public function getWorker()
     {
         return $this->hasOne(User::class, ['id' => 'worker_id']);
+    }
+
+    public function validateLocation()
+    {
+        $city = City::findOne(['title' => $this->location]);
+
+        if (!$city) {
+            $this->addError('location', 'Неправильная локация');
+        }
     }
 
 }

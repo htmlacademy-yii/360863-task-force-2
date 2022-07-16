@@ -5,9 +5,9 @@
  */
 
 use yii\helpers\Html;
-use \yii\widgets\ActiveForm;
-use \app\models\Category;
-echo "<pre>" . print_r($task) . "</pre>"
+use yii\widgets\ActiveForm;
+use app\models\Category;
+
 ?>
 
 <main class="main-content main-content--center container">
@@ -35,12 +35,10 @@ echo "<pre>" . print_r($task) . "</pre>"
                 <?= $form->field($task, 'budget'); ?>
             </div>
             <div class="form-group">
-                <?= $form->field($task, 'expiration_date'); ?>
+                <?= $form->field($task, 'expiration_date')->textInput(['type' => 'datetime-local', 'value' => str_replace(date('Y-m-d', strtotime($task->expiration_date)).' ',date('Y-m-d', strtotime($task->expiration_date)).'T', $task->expiration_date)]); ?>
             </div>
         </div>
-        <?= $form->field($files, 'files')->fileInput(['multiple' => true, 'class' => 'new-file']); ?>
-        <?= $form->field($task, 'customer_id')->hiddenInput(['value'=> Yii::$app->user->getId()])->label(''); ?>
-
+        <?= $form->field($files, 'files[]')->fileInput(['multiple' => true, 'class' => 'new-file']); ?>
         <?= Html::submitInput('Опубликовать', ['class' => 'button button--blue add-task-blue']) ;?>
         <?php ActiveForm::end(); ?>
     </div>

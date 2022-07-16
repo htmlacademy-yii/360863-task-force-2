@@ -76,4 +76,5 @@ class City extends \yii\db\ActiveRecord
     {
         return $this->hasMany(User::class, ['city_id' => 'id']);
     }
+
 }

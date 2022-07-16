@@ -3,6 +3,7 @@
 namespace app\controllers;
 
 use app\models\Task;
+use app\models\City;
 use app\models\TaskFile;
 use Yii;
 use yii\helpers\Url;
@@ -17,22 +18,27 @@ class AddTaskController extends SecuredController
         $task = new Task();
         $files = new TaskFile();
 
-        if (\Yii::$app->request->isPost ) {
-            $task->load(\Yii::$app->request->post());
+        if (Yii::$app->request->isPost) {
+            $task->load(Yii::$app->request->post());
+            $task->customer_id = Yii::$app->user->getId();
 
             if ($task->validate()) {
 
-                $task->save(false);
-                $taskId = Yii::$app->db->getLastInsertID();
+                $task->city_id = City::findOne(['title' => $task->location])->id;
 
-                if (UploadedFile::getInstances($files, 'files')) {
-                    $files = UploadedFile::getInstances($files, 'files');
-                    foreach ($files as $file) {
-                        $file->saveAs("uploads/{$file->baseName}.{$file->extension}");
-                        $file->file = $file;
-                        $file->task_id = $taskId;
-                        $file->save(false);
-                    }
+                if ($task->save(false)) {
+                    $taskId = $task->id;
+                } else {
+                    $taskId = null;
+                }
+
+                $files->files = UploadedFile::getInstances($files, 'files');
+                foreach ($files->files as $file) {
+                    $file->saveAs("uploads/{$file->baseName}.{$file->extension}");
+                    $files->file = $file->name;
+                    $files->task_id = $taskId;
+                    $files->size = ceil(($file->size)/1024);
+                    $files->save(false);
                 }
 
                 $this->redirect(Url::to("tasks/view/$taskId"));
@@ -46,9 +52,5 @@ class AddTaskController extends SecuredController
 }
 
 /*
-1. Сделать календарь
-
-3. Коментарий про данные в лейауте
-4. ошибка если нет задания в бд
-5. На страницу задания вывести файлы
+4. какая то не понятная ошибка если нет задания в бд
 */
