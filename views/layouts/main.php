@@ -7,7 +7,13 @@ use yii\bootstrap4\Html;
 use yii\helpers\Url;
 AppAsset::register($this);
 
+if ($id = \Yii::$app->user->getId()) {
+    $this->context->userProfile = User::findOne($id);
+} else {
+    $this->context->userProfile = null;
+}
 ?>
+
 <?php $this->beginPage() ?>
 <!DOCTYPE html>
 <html lang="<?= Yii::$app->language; ?>" class="h-100">
@@ -35,7 +41,7 @@ AppAsset::register($this);
                     <a href="#" class="link link--nav" >Мои задания</a>
                 </li>
                 <li class="list-item">
-                    <a href="#" class="link link--nav" >Создать задание</a>
+                    <a href="<?= Url::to(['/add-task']); ?>" class="link link--nav" >Создать задание</a>
                 </li>
                 <li class="list-item">
                     <a href="#" class="link link--nav" >Настройки</a>

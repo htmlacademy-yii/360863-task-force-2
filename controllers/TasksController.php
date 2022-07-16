@@ -3,10 +3,11 @@
 namespace app\controllers;
 
 use app\models\Response;
+use app\models\TaskFile;
 use app\models\TaskFilterForm;
 use app\models\Task;
 use Yii;
-use yii\filters\AccessControl;
+use yii\db\Exception;
 use yii\web\NotFoundHttpException;
 
 class TasksController extends SecuredController
@@ -29,6 +30,7 @@ class TasksController extends SecuredController
 
     public function actionView($id): string
     {
+
         $task = Task::find()
             ->where(['id' => $id])
             ->with(['category'])
@@ -43,7 +45,11 @@ class TasksController extends SecuredController
             ->with(['user'])
             ->all();
 
-        return $this->render('view', ['task' => $task, 'responses' => $responses,]);
+        $files = TaskFile::find()
+            ->where(['task_id' => $id])
+            ->all();
+
+        return $this->render('view', ['task' => $task, 'responses' => $responses, 'files' => $files,]);
     }
 
 }
