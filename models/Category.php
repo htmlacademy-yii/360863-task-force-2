@@ -15,7 +15,7 @@ use yii\helpers\ArrayHelper;
  * @property Task[] $tasks
  * @property UserCategory[] $userCategories
  */
-class Category extends \yii\db\ActiveRecord
+class Category extends yii\db\ActiveRecord
 {
     /**
      * {@inheritdoc}

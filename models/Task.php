@@ -3,6 +3,7 @@
 namespace app\models;
 
 use Yii;
+use yii\web\UploadedFile;
 
 /**
  * This is the model class for table "task".
@@ -31,6 +32,9 @@ use Yii;
  */
 class Task extends \yii\db\ActiveRecord
 {
+
+    public $location;
+
     /**
      * {@inheritdoc}
      */
@@ -45,7 +49,7 @@ class Task extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['title', 'description', 'status', 'category_id', 'customer_id'], 'required'],
+            [['title', 'description', 'category_id', 'customer_id'], 'required'],
             [['budget', 'status', 'category_id', 'customer_id', 'worker_id', 'city_id'], 'integer'],
             [['creation_date', 'expiration_date'], 'safe'],
             [['latitude', 'longitude'], 'number'],
@@ -54,6 +58,8 @@ class Task extends \yii\db\ActiveRecord
             [['customer_id'], 'exist', 'skipOnError' => true, 'targetClass' => User::class, 'targetAttribute' => ['customer_id' => 'id']],
             [['worker_id'], 'exist', 'skipOnError' => true, 'targetClass' => User::class, 'targetAttribute' => ['worker_id' => 'id']],
             [['city_id'], 'exist', 'skipOnError' => true, 'targetClass' => City::class, 'targetAttribute' => ['city_id' => 'id']],
+            ['status', 'default', 'value' => 1],
+            [['location'], 'exist', 'skipOnError' => true, 'targetClass' => City::class, 'targetAttribute' => ['location' => 'title'], 'message' => 'Неправильная локация'],
         ];
     }
 
@@ -64,18 +70,19 @@ class Task extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
-            'title' => 'Title',
-            'description' => 'Description',
-            'budget' => 'Budget',
+            'title' => 'Название задания',
+            'description' => 'Подробности задания',
+            'budget' => 'Бюджет',
             'creation_date' => 'Creation Date',
-            'expiration_date' => 'Expiration Date',
+            'expiration_date' => 'Срок исполнения',
             'status' => 'Status',
             'latitude' => 'Latitude',
             'longitude' => 'Longitude',
-            'category_id' => 'Category ID',
+            'category_id' => 'Категория',
             'customer_id' => 'Customer ID',
             'worker_id' => 'Worker ID',
             'city_id' => 'City ID',
+            'location' => 'Локация',
         ];
     }
 
@@ -134,6 +141,7 @@ class Task extends \yii\db\ActiveRecord
      *
      * @return \yii\db\ActiveQuery
      */
+
     public function getTaskFiles()
     {
         return $this->hasMany(TaskFile::class, ['task_id' => 'id']);
@@ -148,4 +156,6 @@ class Task extends \yii\db\ActiveRecord
     {
         return $this->hasOne(User::class, ['id' => 'worker_id']);
     }
+
+
 }
