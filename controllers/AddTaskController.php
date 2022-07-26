@@ -35,10 +35,12 @@ class AddTaskController extends SecuredController
                 $files->files = UploadedFile::getInstances($files, 'files');
                 foreach ($files->files as $file) {
                     $file->saveAs("uploads/{$file->baseName}.{$file->extension}");
-                    $files->file = $file->name;
-                    $files->task_id = $taskId;
-                    $files->size = ceil(($file->size)/1024);
-                    $files->save(false);
+                    $item = new TaskFile();
+                    $item->file = $file->name;
+                    $item->task_id = $taskId;
+                    $item->size = ceil(($file->size)/1024);
+                    $item->save(false);
+
                 }
 
                 $this->redirect(Url::to("tasks/view/$taskId"));

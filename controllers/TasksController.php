@@ -40,16 +40,7 @@ class TasksController extends SecuredController
             throw new NotFoundHttpException("Задание с ID $id не найдено");
         }
 
-        $responses = Response::find()
-            ->where(['task_id' => $id])
-            ->with(['user'])
-            ->all();
-
-        $files = TaskFile::find()
-            ->where(['task_id' => $id])
-            ->all();
-
-        return $this->render('view', ['task' => $task, 'responses' => $responses, 'files' => $files,]);
+        return $this->render('view', ['task' => $task,]);
     }
 
 }

@@ -59,7 +59,7 @@ class Task extends \yii\db\ActiveRecord
             [['worker_id'], 'exist', 'skipOnError' => true, 'targetClass' => User::class, 'targetAttribute' => ['worker_id' => 'id']],
             [['city_id'], 'exist', 'skipOnError' => true, 'targetClass' => City::class, 'targetAttribute' => ['city_id' => 'id']],
             ['status', 'default', 'value' => 1],
-            ['location', 'validateLocation'],       /*тут я получается сделал что если нет такой локации то ошибка, это правильно?*/
+            [['location'], 'exist', 'skipOnError' => true, 'targetClass' => City::class, 'targetAttribute' => ['location' => 'title'], 'message' => 'Неправильная локация'],
         ];
     }
 
@@ -70,7 +70,7 @@ class Task extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
-            'title' => 'Опишите суть работы',
+            'title' => 'Название задания',
             'description' => 'Подробности задания',
             'budget' => 'Бюджет',
             'creation_date' => 'Creation Date',
@@ -141,6 +141,7 @@ class Task extends \yii\db\ActiveRecord
      *
      * @return \yii\db\ActiveQuery
      */
+
     public function getTaskFiles()
     {
         return $this->hasMany(TaskFile::class, ['task_id' => 'id']);
@@ -156,13 +157,5 @@ class Task extends \yii\db\ActiveRecord
         return $this->hasOne(User::class, ['id' => 'worker_id']);
     }
 
-    public function validateLocation()
-    {
-        $city = City::findOne(['title' => $this->location]);
-
-        if (!$city) {
-            $this->addError('location', 'Неправильная локация');
-        }
-    }
 
 }
