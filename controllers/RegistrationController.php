@@ -23,7 +23,8 @@ class RegistrationController extends AppController
             if ($user->validate()) {
                 $user->password = Yii::$app->security->generatePasswordHash($user->password);
                 $user->save(false);
-                $this->redirect(Url::to('/'));
+                Yii::$app->user->login($user);
+                $this->redirect(Url::to('/tasks'));
             }
         }
 

@@ -6,6 +6,7 @@ use app\models\Response;
 use app\models\TaskFile;
 use app\models\TaskFilterForm;
 use app\models\Task;
+use TaskForce\TaskStrategy;
 use Yii;
 use yii\db\Exception;
 use yii\web\NotFoundHttpException;
@@ -41,6 +42,32 @@ class TasksController extends SecuredController
         }
 
         return $this->render('view', ['task' => $task,]);
+    }
+
+    public function actionAccept($id)
+    {
+        $response = Response::find()
+            ->where(['id' => $id])
+            ->one();
+        $response->status = TaskStrategy::RESPONSE_ACCEPTED;
+        $response->save(false);
+        $task = Task::find()
+            ->where(['id' => $response->task_id])
+            ->one();
+        $task->worker_id = $response->user_id;
+        $task->status = TaskStrategy::STATUS_ACTIVE;
+        $task->save(false);
+        return $this->redirect('view/' . $task->id);
+    }
+
+    public function actionReject($id)
+    {
+        $response = Response::find()
+            ->where(['id' => $id])
+            ->one();
+        $response->status = TaskStrategy::RESPONSE_REJECTED;
+        $response->save(false);
+        return $this->redirect('view/' . $response->task_id);
     }
 
 }

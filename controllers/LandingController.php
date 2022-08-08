@@ -26,6 +26,7 @@ class LandingController extends AppController
 
         if($authorization->validate()){
             $user = $authorization->getUser();
+            $this->userProfile = $user;
             Yii::$app->user->login($user);
             return Yii::$app->response->redirect(['/tasks']);
         }

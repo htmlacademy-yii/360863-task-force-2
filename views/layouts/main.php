@@ -7,10 +7,8 @@ use yii\bootstrap4\Html;
 use yii\helpers\Url;
 AppAsset::register($this);
 
-if ($id = \Yii::$app->user->getId()) {
+if ($id = Yii::$app->user->getId()) {
     $this->context->userProfile = User::findOne($id);
-} else {
-    $this->context->userProfile = null;
 }
 ?>
 
