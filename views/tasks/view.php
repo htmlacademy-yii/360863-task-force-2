@@ -3,10 +3,18 @@
  * @var object $userCategories категории пользователя
  * @var object $responses отклики
  * @var object $files файлы задания
+ * @var object $response объект формы отклика
+ * @var object $review объект формы отзыва
+ *
  */
+
+use app\models\User;
+use yii\helpers\Html;
 use yii\helpers\Url;
 use \TaskForce\TaskStrategy;
 use \app\widgets\StarWidget;
+use yii\widgets\ActiveForm;
+
 $this->title = "Задание: $task->title";
 
 ?>
@@ -20,6 +28,7 @@ $this->title = "Задание: $task->title";
         <a href="#" class="button button--blue action-btn" data-action="act_response">Откликнуться на задание</a>
         <a href="#" class="button button--orange action-btn" data-action="refusal">Отказаться от задания</a>
         <a href="#" class="button button--pink action-btn" data-action="completion">Завершить задание</a>
+        <a href="#" class="button button--orange action-btn" data-action="cancel">Отменить задание</a>
         <div class="task-map">
             <img class="map" src="<?= Url::to(['/img/map.png']); ?>"  width="725" height="346" alt="Новый арбат, 23, к. 1">
             <p class="map-address town">Москва</p>
@@ -34,7 +43,7 @@ $this->title = "Задание: $task->title";
                     <div class="feedback-wrapper">
                         <a href="<?= Url::to(['/user/view/', 'id' => $response->user->id]); ?>" class="link link--block link--big"><?= $response->user->name; ?></a>
                         <div class="response-wrapper">
-                            <div class="stars-rating small"><?= StarWidget::getStars(count($response->user->reviews)); ?></div><br>
+                            <div class="stars-rating small"><?= StarWidget::getStars(array_sum(array_column($response->user->reviews, 'grade')) / (count($response->user->reviews) + count($response->user->failed))); ?></div><br>
                             <p class="reviews"><?= count($response->user->reviews); ?> отзыва</p>
                         </div>
                         <p class="response-message">
@@ -96,7 +105,7 @@ $this->title = "Задание: $task->title";
             Вы собираетесь отказаться от выполнения этого задания.<br>
             Это действие плохо скажется на вашем рейтинге и увеличит счетчик проваленных заданий.
         </p>
-        <a class="button button--pop-up button--orange">Отказаться</a>
+        <a class="button button--pop-up button--orange" href="<?= Url::to(['/tasks/reject-task/', 'id' => $task->id]); ?>">Отказаться</a>
         <div class="button-container">
             <button class="button--close" type="button">Закрыть окно</button>
         </div>
@@ -110,15 +119,18 @@ $this->title = "Задание: $task->title";
             Пожалуйста, оставьте отзыв об исполнителе и отметьте отдельно, если возникли проблемы.
         </p>
         <div class="completion-form pop-up--form regular-form">
+            <?php $formAccept = ActiveForm::begin([
+                'method' => 'post'
+            ]); ?>
             <form>
                 <div class="form-group">
-                    <label class="control-label" for="completion-comment">Ваш комментарий</label>
-                    <textarea id="completion-comment"></textarea>
+                    <?= $formAccept->field($review, 'description')->textarea(['rows' => '6']) ?>
                 </div>
-                <p class="completion-head control-label">Оценка работы</p>
+                <?= $formAccept->field($review, 'grade')->radioList(array(1 => 1, 2 => 2, 3 => 3, 4 => 4, 5 => 5)) ;?>
                 <div class="stars-rating big active-stars"><span>&nbsp;</span><span>&nbsp;</span><span>&nbsp;</span><span>&nbsp;</span><span>&nbsp;</span></div>
-                <input type="submit" class="button button--pop-up button--blue" value="Завершить">
+                <?= Html::submitInput('Завершить', ['class' => 'button button--pop-up button--blue']) ;?>
             </form>
+            <?php ActiveForm::end(); ?>
         </div>
         <div class="button-container">
             <button class="button--close" type="button">Закрыть окно</button>
@@ -133,18 +145,34 @@ $this->title = "Задание: $task->title";
             Пожалуйста, укажите стоимость работы и добавьте комментарий, если необходимо.
         </p>
         <div class="addition-form pop-up--form regular-form">
+            <?php $formTake = ActiveForm::begin([
+                'id' => 'take-form',
+                'method' => 'post'
+            ]); ?>
             <form>
                 <div class="form-group">
-                    <label class="control-label" for="addition-comment">Ваш комментарий</label>
-                    <textarea id="addition-comment"></textarea>
+                    <?= $formTake->field($response, 'message')->textarea(['rows' => '6']) ?>
                 </div>
                 <div class="form-group">
-                    <label class="control-label" for="addition-price">Стоимость</label>
-                    <input id="addition-price" type="text">
+                    <?= $formTake->field($response, 'price')->textInput(['type' => 'number']) ?>
                 </div>
-                <input type="submit" class="button button--pop-up button--blue" value="Завершить">
+                <?= Html::submitInput('Завершить', ['class' => 'button button--pop-up button--blue']) ;?>
             </form>
+            <?php ActiveForm::end(); ?>
         </div>
+        <div class="button-container">
+            <button class="button--close" type="button">Закрыть окно</button>
+        </div>
+    </div>
+</section>
+<section class="pop-up pop-up--cancel pop-up--close">
+    <div class="pop-up--wrapper">
+        <h4>Отмена задания</h4>
+        <p class="pop-up-text">
+            <b>Внимание!</b><br>
+            Вы собираетесь отменить это задание.<br>
+        </p>
+        <a class="button button--pop-up button--orange" href="<?= Url::to(['/tasks/cancell-task/', 'id' => $task->id]); ?>">Отменить</a>
         <div class="button-container">
             <button class="button--close" type="button">Закрыть окно</button>
         </div>

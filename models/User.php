@@ -135,6 +135,11 @@ class User extends \yii\db\ActiveRecord implements IdentityInterface
         return $this->hasMany(Review::class, ['worker_id' => 'id']);
     }
 
+    public function getFailed()
+    {
+        return $this->hasMany(Task::class, ['worker_id' => 'id'])->andWhere(['status' => TaskStrategy::STATUS_FAILED]);
+    }
+
     public function getWorkerStatus(): string
     {
         if (Task::find()->where(['worker_id' => $this->id, 'status' => TaskStrategy::STATUS_ACTIVE])->all()) {
