@@ -43,7 +43,9 @@ $this->title = "Задание: $task->title";
                     <div class="feedback-wrapper">
                         <a href="<?= Url::to(['/user/view/', 'id' => $response->user->id]); ?>" class="link link--block link--big"><?= $response->user->name; ?></a>
                         <div class="response-wrapper">
+                            <?php if ($response->user->reviews): ?>
                             <div class="stars-rating small"><?= StarWidget::getStars(array_sum(array_column($response->user->reviews, 'grade')) / (count($response->user->reviews) + count($response->user->failed))); ?></div><br>
+                            <?php endif; ?>
                             <p class="reviews"><?= count($response->user->reviews); ?> отзыва</p>
                         </div>
                         <p class="response-message">
