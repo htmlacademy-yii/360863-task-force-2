@@ -1,7 +1,7 @@
 <?php
 /** @var object $tasks данные заданий
  * @var object $filter модель формы
- *  * @var ActiveDataProvider $dataProvider дата провайдер
+ * @var ActiveDataProvider $dataProvider дата провайдер
  */
 
 use yii\data\ActiveDataProvider;

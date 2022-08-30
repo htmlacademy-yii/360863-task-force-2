@@ -137,7 +137,7 @@ class User extends \yii\db\ActiveRecord implements IdentityInterface
 
     public function getFailed()
     {
-        return $this->hasMany(Task::class, ['worker_id' => 'id'])->andWhere(['status' => TaskStrategy::STATUS_FAILED]);
+        return $this->getTasks()->andWhere(['status' => TaskStrategy::STATUS_FAILED]);
     }
 
     public function getWorkerStatus(): string
