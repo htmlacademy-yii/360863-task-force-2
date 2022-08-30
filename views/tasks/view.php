@@ -3,10 +3,17 @@
  * @var object $userCategories категории пользователя
  * @var object $responses отклики
  * @var object $files файлы задания
+ * @var object $response объект формы отклика
+ * @var object $review объект формы отзыва
+ *
  */
+
+use app\models\User;
+use yii\helpers\Html;
 use yii\helpers\Url;
-use \TaskForce\TaskStrategy;
-use \app\widgets\StarWidget;
+use TaskForce\TaskStrategy;
+use app\widgets\StarWidget;
+use yii\widgets\ActiveForm;
 
 $this->title = "Задание: $task->title";
 
@@ -18,7 +25,7 @@ $this->title = "Задание: $task->title";
             <p class="price price--big"><?= $task->budget; ?> ₽</p>
         </div>
         <p class="task-description"><?= $task->description; ?></p>
-        <a href="#" class="button button--blue">Откликнуться на задание</a>
+        <?= $this->render('_buttons',['task' => $task, 'review' => $review, 'response' => $response,]); ?>
         <div class="task-map">
             <img class="map" src="<?= Url::to(['/img/map.png']); ?>"  width="725" height="346" alt="Новый арбат, 23, к. 1">
             <p class="map-address town">Москва</p>
@@ -27,27 +34,34 @@ $this->title = "Задание: $task->title";
         <h4 class="head-regular">Отклики на задание</h4>
     <?php if ($task->responses): ?>
         <?php foreach ($task->responses as $response): ?>
-            <div class="response-card">
-                <img class="customer-photo" src="<?= $response->user->avatar; ?>" width="146" height="156" alt="Фото заказчиков">
-                <div class="feedback-wrapper">
-                    <a href="<?= Url::to(['/user/view/', 'id' => $response->user->id]); ?>" class="link link--block link--big"><?= $response->user->name; ?></a>
-                    <div class="response-wrapper">
-                        <div class="stars-rating small"><?= StarWidget::getStars(count($response->user->reviews)); ?></div><br>
-                        <p class="reviews"><?= count($response->user->reviews); ?> отзыва</p>
+            <?php if (in_array(Yii::$app->user->id, [$task->customer_id, $response->user_id])): ?>
+                <div class="response-card">
+                    <img class="customer-photo" src="<?= $response->user->avatar; ?>" width="146" height="156" alt="Фото заказчиков">
+                    <div class="feedback-wrapper">
+                        <a href="<?= Url::to(['/user/view/', 'id' => $response->user->id]); ?>" class="link link--block link--big"><?= $response->user->name; ?></a>
+                        <div class="response-wrapper">
+                            <?php if ($response->user->reviews): ?>
+                            <div class="stars-rating small"><?= StarWidget::getStars(array_sum(array_column($response->user->reviews, 'grade')) / (count($response->user->reviews) + count($response->user->failed))); ?></div><br>
+                            <?php endif; ?>
+                            <p class="reviews"><?= count($response->user->reviews); ?> отзыва</p>
+                        </div>
+                        <p class="response-message">
+                            <?= $response->message; ?>
+                        </p>
                     </div>
-                    <p class="response-message">
-                        <?= $response->message; ?>
-                    </p>
+                    <div class="feedback-wrapper">
+                        <p class="info-text"><span class="current-time"><?= TaskForce\Helpers::getTimePassed($response->creation_date); ?></p>
+                        <p class="price price--small"><?= $response->price; ?> ₽</p>
+                    </div>
+
+                    <?php if($task->customer_id === Yii::$app->user->getId() && $task->status === TaskStrategy::STATUS_NEW && $response->status !== TaskStrategy::RESPONSE_REJECTED): ?>
+                    <div class="button-popup">
+                        <a href="<?= Url::to(['/tasks/accept/', 'id' => $response->id]); ?>" class="button button--blue button--small">Принять</a>
+                        <a href="<?= Url::to(['/tasks/reject/', 'id' => $response->id]); ?>" class="button button--orange button--small">Отказать</a>
+                    </div>
+                    <?php endif; ?>
                 </div>
-                <div class="feedback-wrapper">
-                    <p class="info-text"><span class="current-time"><?= TaskForce\Helpers::getTimePassed($response->creation_date); ?></p>
-                    <p class="price price--small"><?= $response->price; ?> ₽</p>
-                </div>
-                <div class="button-popup">
-                    <a href="#" class="button button--blue button--small">Принять</a>
-                    <a href="#" class="button button--orange button--small">Отказать</a>
-                </div>
-            </div>
+            <?php endif; ?>
         <?php endforeach; ?>
     <?php endif; ?>
     </div>
@@ -82,3 +96,4 @@ $this->title = "Задание: $task->title";
         </div>
     </div>
 </main>
+<div class="overlay"></div>

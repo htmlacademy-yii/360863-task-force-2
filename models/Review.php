@@ -48,9 +48,9 @@ class Review extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
-            'description' => 'Description',
+            'description' => 'Ваш комментарий',
             'creation_date' => 'Creation Date',
-            'grade' => 'Grade',
+            'grade' => 'Оценка работы',
             'task_id' => 'Task ID',
         ];
     }
@@ -83,5 +83,10 @@ class Review extends \yii\db\ActiveRecord
     public function getCustomer()
     {
         return $this->hasOne(User::class, ['id' => 'customer_id']);
+    }
+
+    public function formName()
+    {
+        return 'reviewForm';
     }
 }

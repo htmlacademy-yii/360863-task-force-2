@@ -9,5 +9,5 @@ use yii\filters\AccessControl;
 
 abstract class AppController extends \yii\web\Controller
 {
-
+    public $userProfile;
 }
